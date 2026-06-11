@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>実践クイズ — 開発の学び復習</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e1117'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%237c6cff' stroke-width='4'/%3E%3Cpath d='M32 15 L32 49' stroke='%233ad0a8' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M15 32 L49 32' stroke='%233ad0a8' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e1117;
+    --bg2:#161b25;
+    --card:#1c2230;
+    --line:rgba(255,255,255,.08);
+    --line2:rgba(255,255,255,.16);
+    --txt:#e8eaf0;
+    --txt2:#9aa3b5;
+    --txt3:#646d80;
+    --accent:#7c6cff;
+    --accent2:#3ad0a8;
+    --ok:#3ad08a;
+    --okbg:rgba(58,208,138,.12);
+    --ng:#ff6b6b;
+    --ngbg:rgba(255,107,107,.12);
+    --warn:#ffb84d;
+    --info:#5aa9ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    background:var(--bg);
+    color:var(--txt);
+    font-family:'Zen Maru Gothic','Outfit',sans-serif;
+    line-height:1.7;
+    min-height:100vh;
+    background-image:radial-gradient(circle at 15% -10%,rgba(124,108,255,.18),transparent 45%),radial-gradient(circle at 90% 0%,rgba(58,208,168,.12),transparent 40%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:28px 20px 60px;}
+  header{margin-bottom:22px;}
+  .kicker{font-family:'Outfit',sans-serif;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);font-weight:600;}
+  h1{font-size:26px;font-weight:700;margin:4px 0 2px;letter-spacing:.01em;}
+  .sub{font-size:13px;color:var(--txt2);}
+  .best{font-family:'Outfit',sans-serif;font-size:12px;color:var(--txt3);margin-top:8px;}
+  .best b{color:var(--accent2);}
+
+  .bar{height:5px;background:var(--bg2);border-radius:99px;overflow:hidden;margin:18px 0;}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .4s cubic-bezier(.2,.8,.2,1);width:0;}
+
+  .toprow{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .cat{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 13px;border-radius:99px;background:rgba(124,108,255,.16);color:#b9b0ff;}
+  .meta{font-family:'Outfit',sans-serif;font-size:12px;color:var(--txt2);}
+
+  .situation{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:16px;}
+  .situation .lbl{font-size:11px;letter-spacing:.1em;color:var(--txt3);font-family:'Outfit',sans-serif;text-transform:uppercase;margin-bottom:7px;}
+  .situation .body{font-size:15px;color:var(--txt);}
+  .question{font-size:18px;font-weight:700;margin-bottom:14px;}
+
+  .opts{display:flex;flex-direction:column;gap:10px;}
+  .opt{
+    text-align:left;background:var(--card);border:1.5px solid var(--line);color:var(--txt);
+    padding:14px 16px;border-radius:13px;font-family:inherit;font-size:14.5px;line-height:1.55;
+    cursor:pointer;transition:all .15s;width:100%;display:flex;gap:11px;align-items:flex-start;
+  }
+  .opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;color:var(--txt2);margin-top:1px;}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:#222a3a;}
+  .opt:disabled{cursor:default;}
+  .opt.correct{border-color:var(--ok);background:var(--okbg);}
+  .opt.correct .mk{background:var(--ok);border-color:var(--ok);color:#062;}
+  .opt.wrong{border-color:var(--ng);background:var(--ngbg);}
+  .opt.wrong .mk{background:var(--ng);border-color:var(--ng);color:#600;}
+
+  .fb{margin-top:16px;animation:rise .3s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .fb .res{font-weight:700;font-size:15px;margin-bottom:6px;display:flex;align-items:center;gap:7px;}
+  .fb .res.ok{color:var(--ok);}
+  .fb .res.ng{color:var(--ng);}
+  .fb .exp{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px 16px;font-size:14px;color:var(--txt2);}
+  .fb .exp b{color:var(--txt);font-weight:500;}
+
+  button.next{margin-top:14px;background:linear-gradient(90deg,var(--accent),#9b8fff);color:#fff;border:none;padding:13px 24px;border-radius:12px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:transform .12s,filter .12s;}
+  button.next:hover{filter:brightness(1.08);}
+  button.next:active{transform:scale(.97);}
+
+  .result{text-align:center;padding:10px 0;}
+  .result .big{font-family:'Outfit',sans-serif;font-size:54px;font-weight:600;line-height:1;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:6px 0;}
+  .result .of{color:var(--txt3);font-size:16px;}
+  .result .msg{font-size:15px;color:var(--txt2);margin:14px 0 22px;}
+  .review{display:flex;flex-direction:column;gap:7px;margin-bottom:24px;text-align:left;}
+  .rrow{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:10px 14px;background:var(--bg2);border:1px solid var(--line);border-radius:11px;}
+  .rrow .ic{font-weight:700;}
+  .rrow .ic.ok{color:var(--ok);}
+  .rrow .ic.ng{color:var(--ng);}
+  .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  button.ghost{background:var(--card);color:var(--txt);border:1.5px solid var(--line2);padding:12px 22px;border-radius:12px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;}
+  button.ghost:hover{border-color:var(--accent);}
+  .pills{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;}
+  .pill{font-family:'Outfit',sans-serif;font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--line2);color:var(--txt2);cursor:pointer;background:transparent;transition:all .15s;}
+  .pill.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .note{font-size:12px;color:var(--txt3);text-align:center;margin-top:30px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Practice Recall</div>
+    <h1>実践クイズ</h1>
+    <div class="sub">これまでの開発の学びを、選択式で復習する</div>
+    <div class="best" id="best"></div>
+  </header>
+  <div id="screen"></div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {cat:"コンフリクト解消",situation:"rbac.md で衝突。HEAD側(PR)は権限を「分離」する方針、develop側は「統合」する方針。説明文に『逆方向で衝突』『設計判断』というキーワードがある。",q:"これは言い換えるとどういう状況？",options:["片方が古い・間違いで、もう片方が正しい『正誤型』の対立","両方とも一部正しく統合すべき『統合型』の対立","両方とも有効な信念で進化した『設計判断型』の対立","PRの主題と無関係な残骸が混ざっただけ"],answer:2,explain:"『逆方向で衝突』『設計判断』は設計判断型のサイン。develop優先が黄金律ではなく、PRの目的(分離)を尊重するのが正解。"},
+  {cat:"コンフリクト解消",situation:"上と同じ『設計判断型』の対立で、PR #637 は『権限を分離する』ことが目的のPRだった。",q:"どうすればいい？",options:["develop(統合)に揃える。作業量が少ないから","#637を生かして分離方針を採用する","両方削除して一から書き直す","判断できないので一旦放置する"],answer:1,explain:"PRの目的を自分で打ち消すのは本末転倒。分離はドキュメントとも一致し、最小権限のセキュリティ原則にも合致する。"},
+  {cat:"Linter / CI",situation:"develop の crud.service.ts は328行、PR head も328行で、どちらもWARN(許容)でCI通過していた。ところがマージしたら342行になりERRORでCIが落ちた(閾値331行)。",q:"これは言い換えるとどういう状況？",options:["片方のブランチに重大なバグが混入した","個別には範囲内だが、合算すると上限を超えてしまった","linterの設定ファイルが壊れている","developが間違って巻き戻された"],answer:1,explain:"引っ越しの荷物の例え。328kg+328kgを1台に積むと規定オーバー。それぞれセーフでも合体でアウトになるパターン。"},
+  {cat:"セキュリティ",situation:"documents API に Mass Assignment 脆弱性。approval_status を勝手に書き換えられ、他人の workflow_request_id を紐付けられる。既存のフロント実装は壊したくない。",q:"どう修正するのが最小コストで確実？",options:["APIをまるごと作り直す","入力を制約(値の許可リスト+所有確認+.strict())","認証を全面的に作り替える","一旦そのAPIを停止する"],answer:1,explain:"多層防御(Defense in Depth)。approval_statusの値制限・所有確認・未知フィールド拒否の3層で、既存フローを壊さず最小コストで塞ぐ。"},
+  {cat:"セキュリティ / 仕様",situation:"コードに『viewSubordinates: view === \"manage\" || user.isSuperAdmin』とある。仕様書では『super_adminでも ?view=manage の申請が必要』。しかし実装ではsuper_adminは申請なしで部下全員の日報が見える。",q:"どうすべき？",options:["実装が便利なので仕様書を変える","|| user.isSuperAdmin を削除し仕様に準拠する","そのまま放置する(便利だから)","super_adminアカウント自体を削除する"],answer:1,explain:"仕様と実装の乖離=情報漏洩リスク。破壊的変更にはなるが、仕様準拠でリスクを解消するのが正しい。"},
+  {cat:"ブランチ管理",situation:"#503 は doc-drift で出たissueの派生issueから、さらに派生したissueだった。事故はベース(派生元)の選択ミスが疑われる。",q:"なぜこの構造でベース選択ミスが起きやすい？",options:["派生の連鎖でどのブランチをベースにすべきか見失いやすいから","派生issueは必ずバグを含むから","古いissueは自動的に削除されるから","developが派生を禁止しているから"],answer:0,explain:"家系図の枝分かれの例え。祖父→父→孫→ひ孫と派生が続くと『#503のベースはどこ?』が曖昧になり、現在いるブランチからつい派生してしまう典型パターン。"},
+  {cat:"用語理解",situation:"「作業ブランチ」「Issue対応ブランチ」「featureブランチ」という言葉が会話に出てくる。",q:"これらの関係は？",options:["それぞれ別々のブランチを指す","通常は同じものを指す違う呼び方","作業ブランチだけが本物で他は誤り","developの別名"],answer:1,explain:"通常フローでは『develop から派生して作業中のブランチ』を指す同じものの別名。ブランチは1つ、呼び方が複数あるだけ。"},
+  {cat:"マインドセット",situation:"管理者から『issue自体は結構古いですし、大まかでも良いので修正内容を掴めるようになると自然とわかるようになっていく』と言われた。",q:"このメッセージの本質は？",options:["完璧に理解しないと先に進むなという指示","完璧主義を手放し、大まかな理解を積めば経験で分かるようになるという励まし","もっと早く作業しろという催促","このissueは諦めろという意味"],answer:1,explain:"短期の完璧主義より長期の成長を重視する優れた管理者のメッセージ。『映画のあらすじ』のように大まかに掴めばOK。"}
+];
+
+const LS_BEST="learnquiz_best_v1";
+let pool=QUESTIONS.slice();
+let activeCats=null;
+let order=[],idx=0,score=0,answered=false,history=[];
+
+function getBest(){try{return JSON.parse(localStorage.getItem(LS_BEST))||{};}catch(e){return {};}}
+function setBest(b){try{localStorage.setItem(LS_BEST,JSON.stringify(b));}catch(e){}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function renderBest(){
+  const b=getBest();
+  const el=document.getElementById('best');
+  if(b.pct!=null){el.innerHTML=`ベスト記録 <b>${b.pct}%</b>（${b.score}/${b.total}）`;}
+  else{el.textContent="";}
+}
+
+function setBar(p){const el=document.getElementById('bar');if(el)el.querySelector('i').style.width=p+'%';}
+
+function start(){
+  pool=activeCats?QUESTIONS.filter(q=>activeCats.includes(q.cat)):QUESTIONS.slice();
+  order=shuffle(pool.map((_,i)=>i));
+  idx=0;score=0;answered=false;history=[];
+  renderQ();
+}
+
+function renderQ(){
+  const s=document.getElementById('screen');
+  if(idx>=order.length)return renderResult();
+  const q=pool[order[idx]];answered=false;
+  s.innerHTML=`
+    <div class="bar" id="bar"><i></i></div>
+    <div class="toprow">
+      <span class="cat">${esc(q.cat)}</span>
+      <span class="meta">問題 ${idx+1} / ${order.length}　スコア ${score}</span>
+    </div>
+    <div class="situation"><div class="lbl">状況</div><div class="body">${esc(q.situation)}</div></div>
+    <div class="question">${esc(q.q)}</div>
+    <div class="opts" id="opts"></div>
+    <div id="fb"></div>`;
+  setBar(idx/order.length*100);
+  const marks=['A','B','C','D'];
+  const opts=document.getElementById('opts');
+  q.options.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="mk">${marks[i]}</span><span>${esc(o)}</span>`;
+    b.onclick=()=>pick(i);
+    opts.appendChild(b);
+  });
+}
+
+function pick(i){
+  if(answered)return;answered=true;
+  const q=pool[order[idx]];
+  const correct=i===q.answer;
+  if(correct)score++;
+  history.push({cat:q.cat,correct});
+  const opts=document.getElementById('opts').children;
+  for(let k=0;k<opts.length;k++){
+    opts[k].disabled=true;
+    if(k===q.answer)opts[k].classList.add('correct');
+    else if(k===i)opts[k].classList.add('wrong');
+  }
+  const last=idx+1>=order.length;
+  document.getElementById('fb').innerHTML=`
+    <div class="fb">
+      <div class="res ${correct?'ok':'ng'}">${correct?'✓ 正解':'✕ 不正解'}</div>
+      <div class="exp"><b>解説：</b>${esc(q.explain)}</div>
+      <button class="next" id="nx">${last?'結果を見る':'次の問題 →'}</button>
+    </div>`;
+  setBar((idx+1)/order.length*100);
+  document.getElementById('nx').onclick=()=>{idx++;renderQ();};
+}
+
+function renderResult(){
+  const total=order.length;
+  const pct=Math.round(score/total*100);
+  let msg;
+  if(pct===100)msg="完璧。パターン認識が完全に身についています。";
+  else if(pct>=70)msg="優秀。実践の判断軸がしっかり定着しています。";
+  else if(pct>=40)msg="良い調子。解説を見返してパターンを掴みましょう。";
+  else msg="復習のチャンス。状況のタイプ判別から見直しを。";
+  const b=getBest();
+  let isBest=false;
+  if(b.pct==null||pct>b.pct){setBest({pct,score,total});isBest=true;}
+  renderBest();
+  const marks={};
+  document.getElementById('screen').innerHTML=`
+    <div class="result">
+      <div class="big">${pct}%</div>
+      <div class="of">${score} / ${total} 問正解${isBest?'　🎉 自己ベスト更新':''}</div>
+      <div class="msg">${msg}</div>
+      <div class="review">
+        ${history.map(h=>`<div class="rrow"><span>${esc(h.cat)}</span><span class="ic ${h.correct?'ok':'ng'}">${h.correct?'✓':'✕'}</span></div>`).join('')}
+      </div>
+      <div class="actions">
+        <button class="next" onclick="catScreen()">カテゴリを選んで再挑戦</button>
+        <button class="ghost" onclick="start()">全問もう一度</button>
+      </div>
+    </div>
+    <div class="note">記録はこの端末に保存されます。<br>新しい問題を増やしたいときは、Claudeに「クイズ更新して」と伝えて最新版ファイルを受け取ってください。</div>`;
+}
+
+function catScreen(){
+  const cats=[...new Set(QUESTIONS.map(q=>q.cat))];
+  if(!activeCats)activeCats=cats.slice();
+  const s=document.getElementById('screen');
+  s.innerHTML=`
+    <div style="margin-bottom:18px;font-size:14px;color:var(--txt2);">出題するカテゴリを選んでください（タップで切替）</div>
+    <div class="pills" id="pills"></div>
+    <div class="actions">
+      <button class="next" onclick="start()">スタート</button>
+      <button class="ghost" onclick="activeCats=null;start()">全カテゴリで開始</button>
+    </div>`;
+  const p=document.getElementById('pills');
+  cats.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='pill'+(activeCats.includes(c)?' on':'');
+    b.textContent=c;
+    b.onclick=()=>{
+      if(activeCats.includes(c))activeCats=activeCats.filter(x=>x!==c);
+      else activeCats.push(c);
+      if(activeCats.length===0)activeCats.push(c);
+      catScreen();
+    };
+    p.appendChild(b);
+  });
+}
+
+renderBest();
+start();
+</script>
+</body>
+</html>
