@@ -99,6 +99,11 @@
   .pill{font-family:'Outfit',sans-serif;font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--line2);color:var(--txt2);cursor:pointer;background:transparent;transition:all .15s;}
   .pill.on{background:var(--accent);border-color:var(--accent);color:#fff;}
   .note{font-size:12px;color:var(--txt3);text-align:center;margin-top:30px;line-height:1.6;}
+
+  .term{color:var(--accent2);border-bottom:1px dashed rgba(58,208,168,.45);cursor:help;}
+  .term:hover,.term:focus{color:#fff;border-bottom-color:var(--accent2);outline:none;}
+  .glosspop{position:absolute;z-index:60;max-width:min(300px,86vw);background:#0b0f16;border:1px solid var(--line2);border-radius:10px;padding:10px 13px;font-size:13px;line-height:1.55;color:var(--txt);box-shadow:0 10px 30px rgba(0,0,0,.55);font-family:'Zen Maru Gothic','Outfit',sans-serif;}
+  .glosspop b{color:var(--accent2);font-weight:500;}
 </style>
 </head>
 <body>
@@ -107,6 +112,7 @@
     <div class="kicker">Practice Recall</div>
     <h1>実践クイズ</h1>
     <div class="sub">これまでの開発の学びを、選択式で復習する</div>
+    <div class="sub" style="font-size:12px;color:var(--txt3);margin-top:3px;">下線つきの語句はカーソル/タップで意味が見られます</div>
     <div class="best" id="best"></div>
   </header>
   <div id="screen"></div>
@@ -127,6 +133,97 @@ const QUESTIONS = [
   {cat:"スコープ設計",situation:"Issue全体が『i18nライブラリ導入 + 277件のエラーコード化 + 209個のVueファイル移行』という超大規模。Issue自体も『まず基盤を1本作れば以降は強制できる』『ボーイスカウトルールで段階移行』を前提にしている。これを単一PRでやると数千行になる。",q:"このPRでどこまで対応するのがベスト？",options:["i18nライブラリ導入含め7件すべてを一気に完遂する","共通の仕組み(エラーコード定義・メッセージ集約・再発防止ルール)という基盤を作り、各問題は代表箇所だけ移行する","土台は作らず、目についた特定の箇所だけその場で直す","スコープが大きすぎるので何も着手しない"],answer:1,explain:"大規模変更の王道は『まず最初の1本(基盤)を切る』こと。土台ができれば残りは同じパターンの繰り返しになり、後続PRで安全に進められる。全件フル対応は数千行・高リスクで非推奨、特定箇所だけだと再発を防ぐ仕組みが残らない。"},
   {cat:"Linter / CI",situation:"『同じミスをもう混入させない』ための ESLint ルールを入れたい。しかし既存コードには違反が大量にある。",q:"このルールのレベルをどう設定するのがベスト？",options:["error にして、違反があればCIを落とす","warn で導入し、ビルドは止めずに新規混入を可視化して段階的に直す","ルール自体を入れない","既存ファイルを全部 eslint-disable で無効化してから error にする"],answer:1,explain:"いきなり error にすると既存の大量違反でCIが即落ちて何も進まない。warn なら今すぐ導入でき、新しく書いたコードの違反は警告として浮かび上がるので新規混入を防げる。既存違反は段階的に解消すればよい。『まず可視化、強制は後で』が安全な第一歩。"}
 ];
+
+// 用語集：問題文・解説中の語句にカーソル/タップで意味を表示する。新しい質問のたびにここへ追記する。
+const GLOSSARY={
+  "PR":"プルリクエスト。あるブランチの変更をdevelopなどの本流へ取り込んでほしいと依頼するマージ提案。1つの作業ブランチと結びつく。",
+  "ブランチ":"作業を枝分かれさせて進めるための分身。本流を壊さずに変更を試せる。",
+  "develop":"開発の本流ブランチ。各作業ブランチはここから派生し、ここへマージされることが多い。",
+  "HEAD":"いま自分がチェックアウトしている位置（現在のブランチ／コミット）を指すポインタ。",
+  "コンフリクト":"2つの変更が同じ箇所を別々に書き換え、Gitが自動で統合できなくなった状態。手動で解決が必要。",
+  "衝突":"コンフリクトのこと。同じ箇所への変更がぶつかり自動で統合できない状態。",
+  "マージ":"別々のブランチの変更を1つに統合すること。",
+  "CI":"継続的インテグレーション。pushのたびに自動でテストやlintを走らせ、壊れていないか検査する仕組み。",
+  "Linter":"コードの書き方や規約違反を自動でチェックするツール。",
+  "lint":"Linterによるコードチェックのこと。",
+  "ESLint":"JavaScript/TypeScript用の代表的なLinter。",
+  "warn":"Linterの警告レベル。違反があっても処理は止めず、注意だけ表示する。",
+  "error":"Linterのエラーレベル。違反があるとCIなどが失敗（停止）する。",
+  "i18n":"国際化(internationalization)。文言を多言語対応できるようにする仕組み。iとnの間が18文字あるのが由来。",
+  "Mass Assignment":"入力項目をまとめて保存する処理で、本来書き換えさせたくない項目まで外部から書き換えられてしまう脆弱性。",
+  "脆弱性":"攻撃に悪用されうるセキュリティ上の弱点。",
+  "多層防御":"1つの対策に頼らず、複数の防御を重ねて守る考え方（Defense in Depth）。",
+  "Defense in Depth":"多層防御。複数の対策を重ねて守るセキュリティの考え方。",
+  "super_admin":"最上位の管理者権限。通常はすべてにアクセスできる。",
+  "最小権限":"必要最小限の権限だけを与えるセキュリティ原則。",
+  "Issue":"GitHubなどで管理する課題・タスクの単位。バグ報告や機能要望など。",
+  "doc-drift":"ドキュメントと実装コードが食い違っている状態（ドキュメントのズレ）。",
+  "Vue":"画面側(フロントエンド)を作るためのJavaScriptフレームワーク。",
+  "frontend":"利用者が直接触れる画面側。",
+  "backend":"サーバー側。データ処理やDBを担当する裏側。",
+  "enum":"列挙型。決まった値の集合に名前を付けて扱う仕組み（例：エラーコード一覧）。",
+  "ErrorCode":"エラーの種類をコード（識別子）として定義したもの。文言ではなくコードで管理する。",
+  "ボーイスカウトルール":"「来たときより少しきれいにして帰る」。触ったついでに少しだけ改善する考え方。",
+  "スコープ":"その作業やPRで対応する範囲。",
+  "破壊的変更":"既存の動作や互換性を壊してしまう変更。",
+  "MCP":"Model Context Protocol。AIツールに外部機能を接続するための規格。",
+  "throwRouteError":"画面遷移(ルート)処理でエラーを投げる関数の例。文字列の直書きを禁止しコード化する対象。",
+  "ハードコード":"値を直接コードに書き込むこと。多言語化やコード化の妨げになる。",
+  "リファクタリング":"動作を変えずにコードの構造を整理・改善すること。",
+  "回帰テスト":"修正後に元のバグが再発しないかを確認するテスト。"
+};
+const GLOSS_TERMS=Object.keys(GLOSSARY).sort((a,b)=>b.length-a.length);
+const GLOSS_RE=new RegExp(GLOSS_TERMS.map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g');
+function escAttr(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+// テキストをエスケープしつつ、用語にハイライト用spanを付与する（同一テキスト内では各用語を1回だけ）
+function gloss(text){
+  const seen=new Set();
+  return esc(text).replace(GLOSS_RE,(m,offset,full)=>{
+    if(seen.has(m))return m;
+    if(/^[\x20-\x7e]+$/.test(m)){ // 英数字の用語は、より長い単語の一部なら除外
+      const b=full[offset-1],a=full[offset+m.length];
+      if(b&&/[A-Za-z0-9]/.test(b))return m;
+      if(a&&/[A-Za-z0-9]/.test(a))return m;
+    }
+    seen.add(m);
+    return `<span class="term" tabindex="0" data-def="${escAttr(GLOSSARY[m])}">${m}</span>`;
+  });
+}
+function initGlossary(){
+  const pop=document.createElement('div');
+  pop.className='glosspop';pop.style.display='none';
+  document.body.appendChild(pop);
+  let pinned=null,timer=null;
+  function show(el){
+    pop.textContent=el.getAttribute('data-def');
+    pop.style.display='block';pop.style.left='0px';pop.style.top='0px';
+    const r=el.getBoundingClientRect();
+    const pw=pop.offsetWidth,ph=pop.offsetHeight,vw=document.documentElement.clientWidth;
+    let left=window.scrollX+r.left+r.width/2-pw/2;
+    left=Math.max(window.scrollX+8,Math.min(left,window.scrollX+vw-pw-8));
+    let top=window.scrollY+r.top-ph-10;
+    if(top<window.scrollY+4)top=window.scrollY+r.bottom+10;
+    pop.style.left=left+'px';pop.style.top=top+'px';
+  }
+  function hide(){pop.style.display='none';}
+  document.addEventListener('mouseover',e=>{const t=e.target.closest&&e.target.closest('.term');if(t){clearTimeout(timer);if(!pinned)show(t);}});
+  document.addEventListener('mouseout',e=>{const t=e.target.closest&&e.target.closest('.term');if(t&&!pinned)timer=setTimeout(hide,140);});
+  document.addEventListener('click',e=>{
+    if(e.target.closest('.glosspop'))return;
+    const t=e.target.closest('.term');
+    if(t){e.stopPropagation();if(pinned===t){pinned=null;hide();}else{pinned=t;show(t);}return;}
+    if(pinned){pinned=null;hide();}
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){pinned=null;hide();return;}
+    const ae=document.activeElement;
+    if((e.key==='Enter'||e.key===' ')&&ae&&ae.classList&&ae.classList.contains('term')){
+      e.preventDefault();if(pinned===ae){pinned=null;hide();}else{pinned=ae;show(ae);}
+    }
+  });
+  window.addEventListener('scroll',()=>{if(pinned)show(pinned);else hide();},true);
+  window.addEventListener('resize',()=>{if(pinned)show(pinned);else hide();});
+}
 
 const LS_BEST="learnquiz_best_v1";
 let pool=QUESTIONS.slice();
@@ -164,8 +261,8 @@ function renderQ(){
       <span class="cat">${esc(q.cat)}</span>
       <span class="meta">問題 ${idx+1} / ${order.length}　スコア ${score}</span>
     </div>
-    <div class="situation"><div class="lbl">状況</div><div class="body">${esc(q.situation)}</div></div>
-    <div class="question">${esc(q.q)}</div>
+    <div class="situation"><div class="lbl">状況</div><div class="body">${gloss(q.situation)}</div></div>
+    <div class="question">${gloss(q.q)}</div>
     <div class="opts" id="opts"></div>
     <div id="fb"></div>`;
   setBar(idx/order.length*100);
@@ -174,8 +271,8 @@ function renderQ(){
   q.options.forEach((o,i)=>{
     const b=document.createElement('button');
     b.className='opt';
-    b.innerHTML=`<span class="mk">${marks[i]}</span><span>${esc(o)}</span>`;
-    b.onclick=()=>pick(i);
+    b.innerHTML=`<span class="mk">${marks[i]}</span><span>${gloss(o)}</span>`;
+    b.onclick=(e)=>{if(e.target.closest('.term'))return;pick(i);};
     opts.appendChild(b);
   });
 }
@@ -196,7 +293,7 @@ function pick(i){
   document.getElementById('fb').innerHTML=`
     <div class="fb">
       <div class="res ${correct?'ok':'ng'}">${correct?'✓ 正解':'✕ 不正解'}</div>
-      <div class="exp"><b>解説：</b>${esc(q.explain)}</div>
+      <div class="exp"><b>解説：</b>${gloss(q.explain)}</div>
       <button class="next" id="nx">${last?'結果を見る':'次の問題 →'}</button>
     </div>`;
   setBar((idx+1)/order.length*100);
@@ -258,6 +355,7 @@ function catScreen(){
   });
 }
 
+initGlossary();
 renderBest();
 start();
 </script>
