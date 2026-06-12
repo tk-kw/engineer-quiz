@@ -104,6 +104,10 @@
   .term:hover,.term:focus{color:#fff;border-bottom-color:var(--accent2);outline:none;}
   .glosspop{position:absolute;z-index:60;max-width:min(300px,86vw);background:#0b0f16;border:1px solid var(--line2);border-radius:10px;padding:10px 13px;font-size:13px;line-height:1.55;color:var(--txt);box-shadow:0 10px 30px rgba(0,0,0,.55);font-family:'Zen Maru Gothic','Outfit',sans-serif;}
   .glosspop b{color:var(--accent2);font-weight:500;}
+
+  #delrow{margin-top:18px;text-align:center;}
+  .delbtn{background:transparent;border:1px solid var(--line);color:var(--txt3);padding:8px 16px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer;transition:all .15s;}
+  .delbtn:hover{border-color:var(--ng);color:var(--ng);}
 </style>
 </head>
 <body>
@@ -169,7 +173,53 @@ const GLOSSARY={
   "throwRouteError":"画面遷移(ルート)処理でエラーを投げる関数の例。文字列の直書きを禁止しコード化する対象。",
   "ハードコード":"値を直接コードに書き込むこと。多言語化やコード化の妨げになる。",
   "リファクタリング":"動作を変えずにコードの構造を整理・改善すること。",
-  "回帰テスト":"修正後に元のバグが再発しないかを確認するテスト。"
+  "回帰テスト":"修正後に元のバグが再発しないかを確認するテスト。",
+  "コミット":"変更を1つの区切りとして記録すること。メッセージを付けて履歴に残す。",
+  "push":"ローカルのコミットをGitHubなどのリモートに送信すること。",
+  "pull":"リモートの最新の変更を取得して手元に取り込むこと。",
+  "fetch":"リモートの変更を取得だけする（マージはしない）操作。",
+  "rebase":"自分のコミットを別のブランチの先端に付け替え、履歴を一直線に整える操作。",
+  "squash":"複数のコミットを1つにまとめること。",
+  "fast-forward":"分岐の履歴を残さず、ブランチのポインタを進めるだけのマージ。",
+  "マージコミット":"2つのブランチを統合した記録として作られる専用のコミット。--no-ff で残せる。",
+  "stash":"作業中の変更を一時的に退避させておくGitの機能。",
+  "リポジトリ":"プロジェクトのファイルと変更履歴を保管する入れ物。",
+  "GitHub":"コードとその履歴(Gitリポジトリ)をネット上で共有・管理するサービス。",
+  "GitHub Pages":"GitHubのリポジトリから静的サイトを無料で公開できる機能。",
+  "pre-commit":"コミット直前に自動で走る検査(フック)。lintやテストの通過を強制できる。",
+  "フック":"特定のタイミングで自動実行される処理。Gitのpre-commit/pre-pushなど。",
+  "API":"プログラム同士がやり取りするための窓口・取り決め。",
+  "エンドポイント":"APIにアクセスするための個々のURL(入口)。",
+  "DB":"データベース。データを保存・検索するための仕組み。",
+  "データベース":"データを保存・検索・管理するための仕組み。",
+  "スキーマ":"データの構造（テーブルや項目の定義）のこと。",
+  "migration":"DBの構造変更を順番に適用・管理する仕組み。マイグレーション。",
+  "ER図":"テーブル同士の関係を図で表したもの（実体関連図）。",
+  "バリデーション":"入力値が正しい形式・範囲かを検証すること。",
+  "許可リスト":"受け入れてよい値だけをあらかじめ列挙し、それ以外を弾く方式（ホワイトリスト）。",
+  "認証":"相手が誰かを確かめること（ログインなど）。Authentication。",
+  "認可":"その人に操作・閲覧の権限があるかを判定すること。Authorization。",
+  "RBAC":"役割ベースのアクセス制御。ユーザーの役割(role)ごとに権限を決める仕組み。",
+  "role":"ユーザーに割り当てる役割。権限の単位になる。",
+  "Cookie":"ブラウザに保存される小さなデータ。ログイン状態の保持などに使う。",
+  "セッション":"ログイン状態など、一連のやり取りを識別・維持する仕組み。",
+  "JWT":"署名付きで情報を持たせるトークン形式(JSON Web Token)。認証によく使う。",
+  "トークン":"本人確認や権限を表す引換券のような文字列。",
+  "Supabase":"認証・DB・ストレージなどをまとめて提供するバックエンドサービス。",
+  "Storage":"ファイル(画像やPDF等)を保存しておく領域・サービス。",
+  "バケット":"ストレージ内のファイルを入れる入れ物・区画。",
+  "TTL":"データやURLの有効期限(Time To Live)。期限切れで使えなくなる。",
+  "TypeScript":"型を付けられるJavaScript。記述ミスを事前に検出しやすい。",
+  "JavaScript":"Webページに動きを付けるプログラミング言語。",
+  "フレームワーク":"アプリ開発の土台となる枠組み・部品集。",
+  "npm":"JavaScriptのパッケージ(ライブラリ)を管理・導入するツール。",
+  "ライブラリ":"よく使う機能をまとめた再利用可能な部品集。",
+  "環境変数":"コードの外から渡す設定値。APIキーや接続先など。",
+  "デプロイ":"作ったアプリを公開環境に配置して使える状態にすること。",
+  "ロールバック":"問題が起きたとき、変更を以前の状態へ戻すこと。",
+  ".strict()":"未知のフィールドが来たら拒否する検証設定(Zod等)。余計な項目の混入を防ぐ。",
+  "テストカバレッジ":"テストがコードのどれだけを通っているかの割合。",
+  "型":"値の種類(文字列・数値など)。型で不正な代入を防げる。"
 };
 const GLOSS_TERMS=Object.keys(GLOSSARY).sort((a,b)=>b.length-a.length);
 const GLOSS_RE=new RegExp(GLOSS_TERMS.map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g');
@@ -225,6 +275,7 @@ function initGlossary(){
 }
 
 const LS_BEST="learnquiz_best_v1";
+const LS_DELETED="learnquiz_deleted_v1";
 let pool=QUESTIONS.slice();
 let activeCats=null;
 let order=[],idx=0,score=0,answered=false,history=[];
@@ -233,6 +284,22 @@ function getBest(){try{return JSON.parse(localStorage.getItem(LS_BEST))||{};}cat
 function setBest(b){try{localStorage.setItem(LS_BEST,JSON.stringify(b));}catch(e){}}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// 削除した問題はこの端末に記録し、以後出題しない（問題文＋カテゴリで識別。復元も可能）
+function qkey(q){return q.cat+'|'+q.q;}
+function getDeleted(){try{return JSON.parse(localStorage.getItem(LS_DELETED))||{};}catch(e){return {};}}
+function setDeleted(d){try{localStorage.setItem(LS_DELETED,JSON.stringify(d));}catch(e){}}
+function liveQuestions(){const d=getDeleted();return QUESTIONS.filter(q=>!d[qkey(q)]);}
+function deletedCount(){return Object.keys(getDeleted()).length;}
+function restoreDeleted(){setDeleted({});}
+function deleteCurrent(){
+  if(answered)return;
+  const q=pool[order[idx]];
+  if(!confirm('この問題を削除しますか？\nこの端末では今後出題されなくなります（復元も可能）。'))return;
+  const d=getDeleted();d[qkey(q)]=1;setDeleted(d);
+  order.splice(idx,1);
+  if(idx>=order.length)renderResult();else renderQ();
+}
 
 function renderBest(){
   const b=getBest();
@@ -244,7 +311,8 @@ function renderBest(){
 function setBar(p){const el=document.getElementById('bar');if(el)el.querySelector('i').style.width=p+'%';}
 
 function start(){
-  pool=activeCats?QUESTIONS.filter(q=>activeCats.includes(q.cat)):QUESTIONS.slice();
+  const base=liveQuestions();
+  pool=activeCats?base.filter(q=>activeCats.includes(q.cat)):base.slice();
   order=shuffle(pool.map((_,i)=>i));
   idx=0;score=0;answered=false;history=[];
   renderQ();
@@ -263,7 +331,8 @@ function renderQ(){
     <div class="situation"><div class="lbl">状況</div><div class="body">${gloss(q.situation)}</div></div>
     <div class="question">${gloss(q.q)}</div>
     <div class="opts" id="opts"></div>
-    <div id="fb"></div>`;
+    <div id="fb"></div>
+    <div id="delrow"><button class="delbtn" id="delq">🗑 この問題を削除</button></div>`;
   setBar(idx/order.length*100);
   const marks=['A','B','C','D'];
   const opts=document.getElementById('opts');
@@ -274,10 +343,12 @@ function renderQ(){
     b.onclick=(e)=>{if(e.target.closest('.term'))return;pick(i);};
     opts.appendChild(b);
   });
+  document.getElementById('delq').onclick=deleteCurrent;
 }
 
 function pick(i){
   if(answered)return;answered=true;
+  const dr=document.getElementById('delrow');if(dr)dr.style.display='none';
   const q=pool[order[idx]];
   const correct=i===q.answer;
   if(correct)score++;
@@ -301,6 +372,17 @@ function pick(i){
 
 function renderResult(){
   const total=order.length;
+  if(total===0){
+    document.getElementById('screen').innerHTML=`
+      <div class="result">
+        <div class="msg">出題できる問題がありません。${deletedCount()>0?'削除した問題を復元してください。':'カテゴリの選択を見直してください。'}</div>
+        <div class="actions">
+          ${deletedCount()>0?`<button class="next" onclick="restoreDeleted();start()">削除した問題を復元（${deletedCount()}件）</button>`:''}
+          <button class="ghost" onclick="catScreen()">カテゴリを選ぶ</button>
+        </div>
+      </div>`;
+    return;
+  }
   const pct=Math.round(score/total*100);
   let msg;
   if(pct===100)msg="完璧。パターン認識が完全に身についています。";
@@ -323,14 +405,16 @@ function renderResult(){
       <div class="actions">
         <button class="next" onclick="catScreen()">カテゴリを選んで再挑戦</button>
         <button class="ghost" onclick="start()">全問もう一度</button>
+        ${deletedCount()>0?`<button class="ghost" onclick="restoreDeleted();start()">削除した問題を復元（${deletedCount()}件）</button>`:''}
       </div>
     </div>
     <div class="note">記録はこの端末に保存されます。<br>新しい問題を増やしたいときは、Claudeに「クイズ更新して」と伝えて最新版ファイルを受け取ってください。</div>`;
 }
 
 function catScreen(){
-  const cats=[...new Set(QUESTIONS.map(q=>q.cat))];
+  const cats=[...new Set(liveQuestions().map(q=>q.cat))];
   if(!activeCats)activeCats=cats.slice();
+  else activeCats=activeCats.filter(c=>cats.includes(c));
   const s=document.getElementById('screen');
   s.innerHTML=`
     <div style="margin-bottom:18px;font-size:14px;color:var(--txt2);">出題するカテゴリを選んでください（タップで切替）</div>
@@ -338,6 +422,7 @@ function catScreen(){
     <div class="actions">
       <button class="next" onclick="start()">スタート</button>
       <button class="ghost" onclick="activeCats=null;start()">全カテゴリで開始</button>
+      ${deletedCount()>0?`<button class="ghost" onclick="restoreDeleted();catScreen()">削除した問題を復元（${deletedCount()}件）</button>`:''}
     </div>`;
   const p=document.getElementById('pills');
   cats.forEach(c=>{
