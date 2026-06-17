@@ -60,6 +60,12 @@
   .situation{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:16px;}
   .situation .lbl{font-size:11px;letter-spacing:.1em;color:var(--txt3);font-family:var(--font);text-transform:uppercase;margin-bottom:7px;}
   .situation .body{font-size:15px;color:var(--txt);}
+  /* 状況文の自動整形：(1)(2)(3)の箇条を行に分けて読みやすくする */
+  .situation .body .lead{display:block;margin-bottom:6px;}
+  .situation .body ul.enum{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .situation .body ul.enum > li{position:relative;padding:9px 12px 9px 40px;background:var(--card);border:1px solid var(--line);border-radius:11px;line-height:1.6;}
+  .situation .body ul.enum > li .num{position:absolute;left:11px;top:9px;width:21px;height:21px;border-radius:7px;background:rgba(124,108,255,.2);color:#b9b0ff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--font);}
+  .situation .body ul.enum > li .eq{color:var(--accent2);font-weight:600;}
   .question{font-size:18px;font-weight:700;margin-bottom:14px;}
 
   .opts{display:flex;flex-direction:column;gap:10px;}
@@ -502,6 +508,34 @@ function gloss(text){
     return `<span class="term" tabindex="0" data-def="${escAttr(GLOSSARY[m])}">${m}</span>`;
   });
 }
+// 状況文を見やすく整形する（テキストは変えず表示だけ）。
+// 「(1)…、(2)…、(3)…」のような箇条が含まれる場合、各項目を箇条書きの行に分けて表示する。
+// gloss() でハイライト済みのHTMLを受け取り、(n) の番号で分割する。番号は半角/全角どちらも対応。
+function formatSituation(rawText){
+  // 箇条の区切り「(1)」「（1）」を検出。(1)と(2)の両方があるときだけ箇条化する。
+  const numRe=/[（(]\s*([1-9１-９])\s*[）)]/g;
+  const nums=[...rawText.matchAll(numRe)];
+  if(nums.length<2)return `<div>${gloss(rawText)}</div>`; // 箇条が無ければそのまま
+  // gloss(HTML化)はタグ内に = や ( を含むため、整形は生テキスト上で行ってから最後にglossする。
+  const firstIdx=nums[0].index;
+  const lead=rawText.slice(0,firstIdx).trim();
+  const items=[];
+  for(let i=0;i<nums.length;i++){
+    const start=nums[i].index+nums[i][0].length;
+    const end=(i+1<nums.length)?nums[i+1].index:rawText.length;
+    let seg=rawText.slice(start,end).trim();
+    seg=seg.replace(/^[、,\s]+/,'').replace(/[、,\s]+$/,''); // 端の読点を除去
+    items.push({n:nums[i][1],seg});
+  }
+  // 各項目の生テキスト内「=」を一旦プレースホルダにし、gloss後に矢印spanへ戻す（タグ内の=と混同しないため）
+  const EQ=String.fromCharCode(0xE000); // 私用領域文字。通常文やGLOSSARY語・HTMLと衝突しないプレースホルダ
+  const lis=items.map(it=>{
+    const seg=it.seg.replace(/\s*=\s*/,EQ);
+    let g=gloss(seg).replace(EQ,' <span class="eq">→</span> ');
+    return `<li><span class="num">${it.n}</span>${g}</li>`;
+  }).join('');
+  return `${lead?`<span class="lead">${gloss(lead)}</span>`:''}<ul class="enum">${lis}</ul>`;
+}
 function initGlossary(){
   const pop=document.createElement('div');
   pop.className='glosspop';pop.style.display='none';
@@ -659,7 +693,7 @@ function renderQ(){
       <span class="meta">問題 ${idx+1} / ${order.length}　スコア ${score}</span>
     </div>
     <div class="boxrow"><span class="boxtag box${r.box}">${BOX_LABEL[r.box]}</span>${r.wasConfidentMiss?'<span class="boxtag warn">⚠ 要注意（前回 自信あり→不正解）</span>':''}</div>
-    <div class="situation"><div class="lbl">状況</div><div class="body">${gloss(q.situation)}</div></div>
+    <div class="situation"><div class="lbl">状況</div><div class="body">${formatSituation(q.situation)}</div></div>
     <div class="question">${gloss(q.q)}</div>
     <div id="confbox"></div>
     <div id="optwrap" style="display:none">
