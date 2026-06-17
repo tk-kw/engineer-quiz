@@ -108,6 +108,47 @@
   #delrow{margin-top:18px;text-align:center;}
   .delbtn{background:transparent;border:1px solid var(--line);color:var(--txt3);padding:8px 16px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer;transition:all .15s;}
   .delbtn:hover{border-color:var(--ng);color:var(--ng);}
+
+  /* 間隔反復の箱タグ */
+  .boxrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+  .boxtag{font-family:'Outfit',sans-serif;font-size:11.5px;font-weight:600;padding:4px 11px;border-radius:99px;border:1px solid var(--line2);color:var(--txt2);}
+  .boxtag.box1{color:var(--ng);border-color:rgba(255,107,107,.4);background:var(--ngbg);}
+  .boxtag.box2{color:var(--warn);border-color:rgba(255,184,77,.4);background:rgba(255,184,77,.1);}
+  .boxtag.box3{color:var(--ok);border-color:rgba(58,208,138,.4);background:var(--okbg);}
+  .boxtag.warn{color:var(--warn);border-color:rgba(255,184,77,.5);background:rgba(255,184,77,.12);}
+
+  /* 回答前の自信ヒアリング */
+  .conflbl{font-size:15px;font-weight:700;margin:4px 0 12px;}
+  .confbtns{display:flex;gap:10px;}
+  .confbtn{flex:1;background:linear-gradient(90deg,var(--accent),#9b8fff);color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Zen Maru Gothic','Outfit',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:transform .12s,filter .12s;}
+  .confbtn:hover{filter:brightness(1.08);}
+  .confbtn:active{transform:scale(.97);}
+  .confbtn.ghosty{background:var(--card);color:var(--txt);border:1.5px solid var(--line2);}
+  .confbtn.ghosty:hover{border-color:var(--accent);filter:none;}
+  .conftip{font-size:12px;color:var(--txt3);margin-top:10px;}
+
+  /* ヒント */
+  #hintbox{margin-bottom:10px;}
+  .hint{background:rgba(90,169,255,.1);border:1px solid rgba(90,169,255,.3);border-radius:11px;padding:10px 14px;font-size:13.5px;color:#bcd9ff;}
+  #hintrow{margin-top:12px;}
+  .hintbtn{background:transparent;border:1px dashed var(--line2);color:var(--info);padding:9px 16px;border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;transition:all .15s;}
+  .hintbtn:hover{border-color:var(--info);background:rgba(90,169,255,.08);}
+  .hintdone{font-size:12px;color:var(--txt3);}
+
+  /* 採点後の4象限メッセージ・箱の移動 */
+  .confchip{font-family:'Outfit',sans-serif;font-size:12px;font-weight:500;color:var(--txt2);}
+  .quad{border-radius:11px;padding:10px 14px;font-size:13.5px;margin-bottom:10px;}
+  .quad.ok{background:var(--okbg);border:1px solid rgba(58,208,138,.35);color:#8ef0c4;}
+  .quad.warn{background:rgba(255,184,77,.1);border:1px solid rgba(255,184,77,.35);color:#ffd591;}
+  .quad.ng{background:var(--ngbg);border:1px solid rgba(255,107,107,.4);color:#ff9d9d;}
+  .srsmove{font-family:'Outfit',sans-serif;font-size:12.5px;color:var(--txt3);margin:10px 0 4px;}
+
+  /* 結果のSRSサマリ */
+  .srsstat{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0 16px;font-size:12.5px;color:var(--txt2);font-family:'Outfit',sans-serif;}
+  .srsstat span{background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:5px 13px;}
+  .srsstat span b{color:var(--txt);font-size:14px;}
+  .srsstat span.bad{border-color:rgba(255,107,107,.4);color:#ff9d9d;}
+  .srsstat span.bad b{color:var(--ng);}
 </style>
 </head>
 <body>
@@ -494,12 +535,44 @@ function initGlossary(){
 
 const LS_BEST="learnquiz_best_v1";
 const LS_DELETED="learnquiz_deleted_v1";
+const LS_SRS="learnquiz_srs_v1";
 let pool=QUESTIONS.slice();
 let activeCats=null;
+let mode="practice"; // "practice"=苦手・期限到来を優先 / "all"=カテゴリ内ランダム
 let order=[],idx=0,score=0,answered=false,history=[];
+// 1問内の回答状態（自信ヒアリング・段階ヒント・分かったつもり対策）
+let confidence=null,hintLevel=0,picked=false;
 
 function getBest(){try{return JSON.parse(localStorage.getItem(LS_BEST))||{};}catch(e){return {};}}
 function setBest(b){try{localStorage.setItem(LS_BEST,JSON.stringify(b));}catch(e){}}
+
+/* ── 間隔反復（Leitnerの箱）──────────────────────────────
+  スライドの方針に従い「数値の状態は持たず、理解度ラベル(box)＋最終学習日(last)だけ」で判定する最小構成。
+  box1=△まだ自信なし(約1〜2日) / box2=○なんとなく(約7日) / box3=◎説明できる(約30日)。
+  答え方で箱を動かす：自力で正解→1つ上げる / ヒントあり正解→据え置き / 間違い→box1へ戻す。 */
+const BOX_DAYS={1:1,2:7,3:30};
+const BOX_LABEL={1:"△ まだ自信なし",2:"○ なんとなく",3:"◎ 説明できる"};
+function getSrs(){try{return JSON.parse(localStorage.getItem(LS_SRS))||{};}catch(e){return {};}}
+function setSrs(s){try{localStorage.setItem(LS_SRS,JSON.stringify(s));}catch(e){}}
+function srsOf(q){const s=getSrs();return s[qkey(q)]||{box:1,last:null,miss:0};}
+// 期限到来か：未学習はすぐ出す。box段階に応じた日数が経過していたら出題対象。
+function isDue(q){
+  const r=srsOf(q);
+  if(!r.last)return true;
+  const days=(Date.now()-new Date(r.last).getTime())/86400000;
+  return days>=(BOX_DAYS[r.box]||1);
+}
+function dueCount(list){return list.filter(isDue).length;}
+// 回答結果を箱へ反映。selfSolved=ヒント無しで自力正解、hinted=ヒント使って正解、wrongHadConfidence=自信ありで間違えた(最優先で再出題)
+function recordResult(q,{correct,selfSolved,hinted,wrongHadConfidence}){
+  const s=getSrs();const k=qkey(q);const r=s[k]||{box:1,last:null,miss:0};
+  if(correct&&selfSolved)r.box=Math.min(3,r.box+1);   // 自力正解→1段上げる
+  else if(correct&&hinted){/* ヒントあり正解→据え置き */}
+  else{r.box=1;r.miss=(r.miss||0)+1;}                  // 間違い→box1へ戻す
+  r.wasConfidentMiss=!!wrongHadConfidence;             // 「自信あり×不正解」は思い込み。直しても消さず何度でも出す
+  r.last=new Date().toISOString();
+  s[k]=r;setSrs(s);
+}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
@@ -531,57 +604,154 @@ function setBar(p){const el=document.getElementById('bar');if(el)el.querySelecto
 function start(){
   const base=liveQuestions();
   pool=activeCats?base.filter(q=>activeCats.includes(q.cat)):base.slice();
-  order=shuffle(pool.map((_,i)=>i));
+  if(mode==="practice"){
+    // 期限到来分だけを出題。「自信あり×不正解(思い込み)」→未学習/期限到来 の順で優先。
+    const idxs=pool.map((_,i)=>i).filter(i=>isDue(pool[i]));
+    const rank=i=>{const r=srsOf(pool[i]);return r.wasConfidentMiss?0:(r.last?2:1);};
+    shuffle(idxs);
+    idxs.sort((a,b)=>rank(a)-rank(b));
+    order=idxs;
+  }else{
+    order=shuffle(pool.map((_,i)=>i));
+  }
   idx=0;score=0;answered=false;history=[];
+  if(order.length===0)return renderResult();
   renderQ();
 }
+
+const marks=['A','B','C','D'];
+// 各問のヒントは持たないので、選択肢から段階的に作る（白紙→比喩/カテゴリ→絞り込み→2択）。
+// hideSet: 非表示にする選択肢のインデックス集合。レベルが上がるほど誤答を消して2択に近づける。
+function hintHideSet(q,level){
+  const wrong=q.options.map((_,i)=>i).filter(i=>i!==q.answer);
+  shuffle(wrong);
+  const total=q.options.length;
+  if(level<=1)return new Set();              // レベル0(白紙)・1(比喩)は全選択肢を見せる
+  if(level===2)return new Set(wrong.slice(0,Math.max(0,total-3))); // 3択程度まで
+  return new Set(wrong.slice(0,Math.max(0,total-2)));              // レベル3=2択(最後の救済)
+}
+const HINT_TEXT=[
+  null,
+  q=>`ヒント①：このカテゴリは「${q.cat}」。状況の中の太字キーワードや『つまり何型か』に注目。`,
+  q=>`ヒント②：明らかに筋の悪い選択肢を消して、残りを絞り込みました。`,
+  q=>`ヒント③（最後の救済）：2択まで絞りました。状況の目的に立ち返って選ぶ。`
+];
 
 function renderQ(){
   const s=document.getElementById('screen');
   if(idx>=order.length)return renderResult();
-  const q=pool[order[idx]];answered=false;
+  const q=pool[order[idx]];
+  answered=false;confidence=null;hintLevel=0;picked=false;
+  const r=srsOf(q);
   s.innerHTML=`
     <div class="bar" id="bar"><i></i></div>
     <div class="toprow">
       <span class="cat">${esc(q.cat)}</span>
       <span class="meta">問題 ${idx+1} / ${order.length}　スコア ${score}</span>
     </div>
+    <div class="boxrow"><span class="boxtag box${r.box}">${BOX_LABEL[r.box]}</span>${r.wasConfidentMiss?'<span class="boxtag warn">⚠ 要注意（前回 自信あり→不正解）</span>':''}</div>
     <div class="situation"><div class="lbl">状況</div><div class="body">${gloss(q.situation)}</div></div>
     <div class="question">${gloss(q.q)}</div>
-    <div class="opts" id="opts"></div>
+    <div id="confbox"></div>
+    <div id="optwrap" style="display:none">
+      <div id="hintbox"></div>
+      <div class="opts" id="opts"></div>
+      <div id="hintrow"></div>
+    </div>
     <div id="fb"></div>
     <div id="delrow"><button class="delbtn" id="delq">🗑 この問題を削除</button></div>`;
   setBar(idx/order.length*100);
-  const marks=['A','B','C','D'];
+  renderConfidence();
+  document.getElementById('delq').onclick=deleteCurrent;
+}
+
+// 回答前に自信を聞く（分かったつもり対策）。選んでから選択肢を表示する。
+function renderConfidence(){
+  const cb=document.getElementById('confbox');
+  cb.innerHTML=`
+    <div class="conflbl">答える前に——いまの自信は？</div>
+    <div class="confbtns">
+      <button class="confbtn" data-c="1">自信あり</button>
+      <button class="confbtn ghosty" data-c="0">自信なし</button>
+    </div>
+    <div class="conftip">※ 自信を先に決めることで「分かったつもり」を見つけやすくなります。</div>`;
+  cb.querySelectorAll('.confbtn').forEach(b=>{
+    b.onclick=()=>{confidence=b.getAttribute('data-c')==='1';revealOptions();};
+  });
+}
+
+function revealOptions(){
+  document.getElementById('confbox').style.display='none';
+  document.getElementById('optwrap').style.display='block';
+  renderOptions();
+  renderHintRow();
+}
+
+function renderOptions(){
+  const q=pool[order[idx]];
+  const hide=hintHideSet(q,hintLevel);
+  const hb=document.getElementById('hintbox');
+  hb.innerHTML=(hintLevel>0&&HINT_TEXT[hintLevel])?`<div class="hint">${gloss(HINT_TEXT[hintLevel](q))}</div>`:'';
   const opts=document.getElementById('opts');
+  opts.innerHTML='';
   q.options.forEach((o,i)=>{
+    if(hide.has(i))return;
     const b=document.createElement('button');
     b.className='opt';
     b.innerHTML=`<span class="mk">${marks[i]}</span><span>${gloss(o)}</span>`;
     b.onclick=(e)=>{if(e.target.closest('.term'))return;pick(i);};
     opts.appendChild(b);
   });
-  document.getElementById('delq').onclick=deleteCurrent;
+}
+
+function renderHintRow(){
+  const q=pool[order[idx]];
+  const hr=document.getElementById('hintrow');
+  if(answered){hr.innerHTML='';return;}
+  // ヒントは最大3段階（白紙の次から）。2択まで出したら打ち止め。
+  if(hintLevel>=3){hr.innerHTML='<div class="hintdone">これ以上のヒントはありません。状況の目的に立ち返って選びましょう。</div>';return;}
+  hr.innerHTML=`<button class="hintbtn" id="hintbtn">💡 ヒントを1段もらう（${hintLevel}/3）</button>`;
+  document.getElementById('hintbtn').onclick=()=>{hintLevel++;renderOptions();renderHintRow();};
 }
 
 function pick(i){
-  if(answered)return;answered=true;
+  if(answered)return;answered=true;picked=true;
   const dr=document.getElementById('delrow');if(dr)dr.style.display='none';
+  const hr=document.getElementById('hintrow');if(hr)hr.innerHTML='';
   const q=pool[order[idx]];
   const correct=i===q.answer;
+  const usedHint=hintLevel>0;
+  const selfSolved=correct&&!usedHint;          // 自力で正解（ヒント未使用）
+  const hinted=correct&&usedHint;               // ヒントありで正解
+  const wrongHadConfidence=!correct&&confidence; // 自信あり×不正解＝思い込み（最優先で再出題）
   if(correct)score++;
-  history.push({cat:q.cat,correct});
+  history.push({cat:q.cat,correct,confidence,usedHint});
+  recordResult(q,{correct,selfSolved,hinted,wrongHadConfidence});
   const opts=document.getElementById('opts').children;
   for(let k=0;k<opts.length;k++){
     opts[k].disabled=true;
-    if(k===q.answer)opts[k].classList.add('correct');
-    else if(k===i)opts[k].classList.add('wrong');
+    const mk=opts[k].querySelector('.mk').textContent;
+    const oi=marks.indexOf(mk);
+    if(oi===q.answer)opts[k].classList.add('correct');
+    else if(oi===i)opts[k].classList.add('wrong');
   }
+  // 自信×正誤の4象限メッセージ（分かったつもり対策）
+  let quad,quadCls;
+  if(correct&&confidence){quad="本物か確認：なぜ正しいかを言えれば◎へ昇格の候補。";quadCls="ok";}
+  else if(correct&&!confidence){quad="まぐれ確認：理由を言えなければ据え置き。解説で裏取りを。";quadCls="warn";}
+  else if(!correct&&confidence){quad="⚠ 最優先で訂正：思い込みです。直しても消さず、何度でも出題します。";quadCls="ng";}
+  else{quad="想定内：基礎から学び直し。box1に戻してすぐまた出します。";quadCls="warn";}
+  const r=srsOf(q);
+  const moveTxt=selfSolved?`自力正解 → ${BOX_LABEL[r.box]} に昇格（次は約${BOX_DAYS[r.box]}日後）`
+    :hinted?`ヒントあり正解 → 据え置き（${BOX_LABEL[r.box]}）`
+    :`box1へ → すぐまた出題`;
   const last=idx+1>=order.length;
   document.getElementById('fb').innerHTML=`
     <div class="fb">
-      <div class="res ${correct?'ok':'ng'}">${correct?'✓ 正解':'✕ 不正解'}</div>
+      <div class="res ${correct?'ok':'ng'}">${correct?'✓ 正解':'✕ 不正解'}　<span class="confchip">${confidence?'自信あり':'自信なし'}${usedHint?' / ヒント使用':''}</span></div>
+      <div class="quad ${quadCls}">${quad}</div>
       <div class="exp"><b>解説：</b>${gloss(q.explain)}</div>
+      <div class="srsmove">${moveTxt}</div>
       <button class="next" id="nx">${last?'結果を見る':'次の問題 →'}</button>
     </div>`;
   setBar((idx+1)/order.length*100);
@@ -591,12 +761,15 @@ function pick(i){
 function renderResult(){
   const total=order.length;
   if(total===0){
+    const allDone=mode==="practice"&&deletedCount()===0;
     document.getElementById('screen').innerHTML=`
       <div class="result">
-        <div class="msg">出題できる問題がありません。${deletedCount()>0?'削除した問題を復元してください。':'カテゴリの選択を見直してください。'}</div>
+        <div class="big">🎉</div>
+        <div class="msg">${allDone?'今やるべき復習は完了です。<br>箱が進んだ問題は、期限が来たらまた出題されます。':`出題できる問題がありません。${deletedCount()>0?'削除した問題を復元してください。':'カテゴリの選択を見直してください。'}`}</div>
         <div class="actions">
-          ${deletedCount()>0?`<button class="next" onclick="restoreDeleted();start()">削除した問題を復元（${deletedCount()}件）</button>`:''}
+          <button class="next" onclick="mode='all';start()">全問モードで挑戦</button>
           <button class="ghost" onclick="catScreen()">カテゴリを選ぶ</button>
+          ${deletedCount()>0?`<button class="ghost" onclick="restoreDeleted();start()">削除した問題を復元（${deletedCount()}件）</button>`:''}
         </div>
       </div>`;
     return;
@@ -611,37 +784,55 @@ function renderResult(){
   let isBest=false;
   if(b.pct==null||pct>b.pct){setBest({pct,score,total});isBest=true;}
   renderBest();
-  const marks={};
+  // 「自信あり×不正解（思い込み）」の件数を集計＝最優先で潰すべきもの
+  const confMiss=history.filter(h=>!h.correct&&h.confidence).length;
+  const selfSolved=history.filter(h=>h.correct&&!h.usedHint).length;
+  const remainDue=dueCount(mode==="practice"?pool:liveQuestions());
   document.getElementById('screen').innerHTML=`
     <div class="result">
       <div class="big">${pct}%</div>
       <div class="of">${score} / ${total} 問正解${isBest?'　🎉 自己ベスト更新':''}</div>
       <div class="msg">${msg}</div>
+      <div class="srsstat">
+        <span>自力正解 <b>${selfSolved}</b></span>
+        <span class="${confMiss>0?'bad':''}">思い込み(自信あり→不正解) <b>${confMiss}</b></span>
+        <span>残りの復習 <b>${remainDue}</b></span>
+      </div>
+      ${confMiss>0?`<div class="quad ng" style="text-align:left">⚠ 「自信があったのに間違えた」問題が${confMiss}件あります。一番危ないので、消えずに何度でも出題されます。</div>`:''}
       <div class="review">
-        ${history.map(h=>`<div class="rrow"><span>${esc(h.cat)}</span><span class="ic ${h.correct?'ok':'ng'}">${h.correct?'✓':'✕'}</span></div>`).join('')}
+        ${history.map(h=>`<div class="rrow"><span>${esc(h.cat)}</span><span class="ic ${h.correct?'ok':'ng'}">${h.correct?'✓':'✕'}${h.confidence?'（自信あり）':''}</span></div>`).join('')}
       </div>
       <div class="actions">
-        <button class="next" onclick="catScreen()">カテゴリを選んで再挑戦</button>
-        <button class="ghost" onclick="start()">全問もう一度</button>
+        <button class="next" onclick="mode='practice';start()">続けて復習する</button>
+        <button class="ghost" onclick="catScreen()">カテゴリ/モードを選ぶ</button>
         ${deletedCount()>0?`<button class="ghost" onclick="restoreDeleted();start()">削除した問題を復元（${deletedCount()}件）</button>`:''}
       </div>
     </div>
-    <div class="note">記録はこの端末に保存されます。<br>新しい問題を増やしたいときは、Claudeに「クイズ更新して」と伝えて最新版ファイルを受け取ってください。</div>`;
+    <div class="note">記録（理解度の箱・最終学習日）はこの端末に保存されます。<br>復習モードは「期限が来た問題・苦手な問題」だけを出します。新しい問題はClaudeに「クイズ更新して」と伝えてください。</div>`;
 }
 
 function catScreen(){
   const cats=[...new Set(liveQuestions().map(q=>q.cat))];
   if(!activeCats)activeCats=cats.slice();
   else activeCats=activeCats.filter(c=>cats.includes(c));
+  const due=dueCount(liveQuestions());
   const s=document.getElementById('screen');
   s.innerHTML=`
-    <div style="margin-bottom:18px;font-size:14px;color:var(--txt2);">出題するカテゴリを選んでください（タップで切替）</div>
+    <div style="margin-bottom:12px;font-size:14px;color:var(--txt2);">出題モード</div>
+    <div class="pills" id="modes">
+      <button class="pill${mode==='practice'?' on':''}" data-m="practice">復習（期限到来・苦手を優先）${due>0?` ・ ${due}問`:''}</button>
+      <button class="pill${mode==='all'?' on':''}" data-m="all">全問（カテゴリ内ランダム）</button>
+    </div>
+    <div style="margin:18px 0 8px;font-size:14px;color:var(--txt2);">カテゴリ（タップで切替）</div>
     <div class="pills" id="pills"></div>
     <div class="actions">
       <button class="next" onclick="start()">スタート</button>
       <button class="ghost" onclick="activeCats=null;start()">全カテゴリで開始</button>
       ${deletedCount()>0?`<button class="ghost" onclick="restoreDeleted();catScreen()">削除した問題を復元（${deletedCount()}件）</button>`:''}
     </div>`;
+  s.querySelectorAll('#modes .pill').forEach(b=>{
+    b.onclick=()=>{mode=b.getAttribute('data-m');catScreen();};
+  });
   const p=document.getElementById('pills');
   cats.forEach(c=>{
     const b=document.createElement('button');
@@ -659,7 +850,7 @@ function catScreen(){
 
 initGlossary();
 renderBest();
-start();
+catScreen();
 </script>
 </body>
 </html>
