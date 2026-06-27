@@ -21,9 +21,14 @@
     --line2:rgba(255,255,255,.16);
     --txt:#e8eaf0;
     --txt2:#9aa3b5;
-    --txt3:#646d80;
-    --accent:#7c6cff;
+    --txt3:#868fa3;            /* AA確保: card上4.9 / bg上5.8（旧#646d80は3.0で不足） */
+    --accent:#7c6cff;          /* タグ・枠線など（白文字でない用途）用 */
     --accent2:#3ad0a8;
+    --btn:#6354d6;             /* 白文字ボタン用（白×#6354d6=5.6でAA達成） */
+    --btn2:#6a5ae0;
+    --accent-txt:#b9b0ff;      /* アクセント上の明るい文字 */
+    --pop:#0b0f16;             /* 用語ポップアップ背景 */
+    --card2:#222a3a;           /* 選択肢hover背景 */
     --ok:#3ad08a;
     --okbg:rgba(58,208,138,.12);
     --ng:#ff6b6b;
@@ -54,28 +59,29 @@
   .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .4s cubic-bezier(.2,.8,.2,1);width:0;}
 
   .toprow{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-  .cat{font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 13px;border-radius:99px;background:rgba(124,108,255,.16);color:#b9b0ff;}
+  .cat{font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:.04em;padding:5px 13px;border-radius:99px;background:rgba(124,108,255,.16);color:var(--accent-txt);}
   .meta{font-family:var(--font);font-size:12px;color:var(--txt2);}
 
   .situation{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:16px;}
   .situation .lbl{font-size:11px;letter-spacing:.1em;color:var(--txt3);font-family:var(--font);text-transform:uppercase;margin-bottom:7px;}
-  .situation .body{font-size:15px;color:var(--txt);}
+  .situation .body{font-size:15px;color:var(--txt);overflow-wrap:anywhere;}
   /* 状況文の自動整形：(1)(2)(3)の箇条を行に分けて読みやすくする */
   .situation .body .lead{display:block;margin-bottom:6px;}
   .situation .body ul.enum{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
   .situation .body ul.enum > li{position:relative;padding:9px 12px 9px 40px;background:var(--card);border:1px solid var(--line);border-radius:11px;line-height:1.6;}
-  .situation .body ul.enum > li .num{position:absolute;left:11px;top:9px;width:21px;height:21px;border-radius:7px;background:rgba(124,108,255,.2);color:#b9b0ff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--font);}
+  .situation .body ul.enum > li .num{position:absolute;left:11px;top:9px;width:21px;height:21px;border-radius:7px;background:rgba(124,108,255,.2);color:var(--accent-txt);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--font);}
   .situation .body ul.enum > li .eq{color:var(--accent2);font-weight:600;}
-  .question{font-size:18px;font-weight:700;margin-bottom:14px;}
+  .question{font-size:18px;font-weight:700;margin-bottom:14px;overflow-wrap:anywhere;}
+  .question:focus{outline:none;}
 
   .opts{display:flex;flex-direction:column;gap:10px;}
   .opt{
     text-align:left;background:var(--card);border:1.5px solid var(--line);color:var(--txt);
     padding:14px 16px;border-radius:13px;font-family:inherit;font-size:14.5px;line-height:1.55;
-    cursor:pointer;transition:all .15s;width:100%;display:flex;gap:11px;align-items:flex-start;
+    cursor:pointer;transition:all .15s;width:100%;display:flex;gap:11px;align-items:flex-start;overflow-wrap:anywhere;
   }
   .opt .mk{flex-shrink:0;width:22px;height:22px;border-radius:7px;border:1.5px solid var(--line2);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:12px;font-weight:600;color:var(--txt2);margin-top:1px;}
-  .opt:hover:not(:disabled){border-color:var(--accent);background:#222a3a;}
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--card2);}
   .opt:disabled{cursor:default;}
   .opt.correct{border-color:var(--ok);background:var(--okbg);}
   .opt.correct .mk{background:var(--ok);border-color:var(--ok);color:#062;}
@@ -87,15 +93,15 @@
   .fb .res{font-weight:700;font-size:15px;margin-bottom:6px;display:flex;align-items:center;gap:7px;}
   .fb .res.ok{color:var(--ok);}
   .fb .res.ng{color:var(--ng);}
-  .fb .exp{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px 16px;font-size:14px;color:var(--txt2);}
+  .fb .exp{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px 16px;font-size:14px;color:var(--txt2);overflow-wrap:anywhere;}
   .fb .exp b{color:var(--txt);font-weight:500;}
 
-  button.next{margin-top:14px;background:linear-gradient(90deg,var(--accent),#9b8fff);color:#fff;border:none;padding:13px 24px;border-radius:12px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:transform .12s,filter .12s;}
+  button.next{margin-top:14px;background:linear-gradient(90deg,var(--btn),var(--btn2));color:#fff;border:none;padding:13px 24px;border-radius:12px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;transition:transform .12s,filter .12s;}
   button.next:hover{filter:brightness(1.08);}
   button.next:active{transform:scale(.97);}
 
   .result{text-align:center;padding:10px 0;}
-  .result .big{font-family:var(--font);font-size:54px;font-weight:600;line-height:1;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:6px 0;}
+  .result .big{font-family:var(--font);font-size:54px;font-weight:600;line-height:1;color:var(--accent2);background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:6px 0;}
   .result .of{color:var(--txt3);font-size:16px;}
   .result .msg{font-size:15px;color:var(--txt2);margin:14px 0 22px;}
   .review{display:flex;flex-direction:column;gap:7px;margin-bottom:24px;text-align:left;}
@@ -107,13 +113,14 @@
   button.ghost{background:var(--card);color:var(--txt);border:1.5px solid var(--line2);padding:12px 22px;border-radius:12px;font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;}
   button.ghost:hover{border-color:var(--accent);}
   .pills{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;}
-  .pill{font-family:var(--font);font-size:12px;padding:5px 12px;border-radius:99px;border:1px solid var(--line2);color:var(--txt2);cursor:pointer;background:transparent;transition:all .15s;}
-  .pill.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .pill{font-family:var(--font);font-size:12px;min-height:32px;padding:6px 13px;border-radius:99px;border:1px solid var(--line2);color:var(--txt2);cursor:pointer;background:transparent;transition:all .15s;display:inline-flex;align-items:center;}
+  .pill.on{background:var(--btn);border-color:var(--btn);color:#fff;}
   .note{font-size:12px;color:var(--txt3);text-align:center;margin-top:30px;line-height:1.6;}
 
   .term{color:var(--accent2);border-bottom:1px dashed rgba(58,208,168,.45);cursor:help;}
-  .term:hover,.term:focus{color:#fff;border-bottom-color:var(--accent2);outline:none;}
-  .glosspop{position:absolute;z-index:60;max-width:min(300px,86vw);background:#0b0f16;border:1px solid var(--line2);border-radius:10px;padding:10px 13px;font-size:13px;line-height:1.55;color:var(--txt);box-shadow:0 10px 30px rgba(0,0,0,.55);font-family:var(--font);}
+  .term:hover,.term:focus{color:#fff;border-bottom-color:var(--accent2);}
+  .term:focus-visible{outline:2px solid var(--accent2);outline-offset:2px;border-radius:3px;}
+  .glosspop{position:absolute;z-index:60;max-width:min(300px,86vw);background:var(--pop);border:1px solid var(--line2);border-radius:10px;padding:10px 13px;font-size:13px;line-height:1.55;color:var(--txt);box-shadow:0 10px 30px rgba(0,0,0,.55);font-family:var(--font);overflow-wrap:anywhere;}
   .glosspop b{color:var(--accent2);font-weight:500;}
 
   #delrow{margin-top:18px;text-align:center;}
@@ -131,7 +138,7 @@
   /* 回答前の自信ヒアリング */
   .conflbl{font-size:15px;font-weight:700;margin:4px 0 12px;}
   .confbtns{display:flex;gap:10px;}
-  .confbtn{flex:1;background:linear-gradient(90deg,var(--accent),#9b8fff);color:#fff;border:none;padding:14px;border-radius:12px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:transform .12s,filter .12s;}
+  .confbtn{flex:1;background:linear-gradient(90deg,var(--btn),var(--btn2));color:#fff;border:none;padding:14px;border-radius:12px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:transform .12s,filter .12s;}
   .confbtn:hover{filter:brightness(1.08);}
   .confbtn:active{transform:scale(.97);}
   .confbtn.ghosty{background:var(--card);color:var(--txt);border:1.5px solid var(--line2);}
@@ -175,6 +182,11 @@
   .lvtag.lv1{border-color:var(--ok);color:var(--ok);}
   .lvtag.lv2{border-color:var(--info);color:var(--info);}
   .lvtag.lv3{border-color:var(--ng);color:#ff9d9d;}
+
+  /* 視覚的な動きを抑える設定の尊重 */
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+  }
 </style>
 </head>
 <body>
@@ -1022,7 +1034,7 @@ function renderBest(){
   else{el.textContent="";}
 }
 
-function setBar(p){const el=document.getElementById('bar');if(el)el.querySelector('i').style.width=p+'%';}
+function setBar(p){const el=document.getElementById('bar');if(el){el.querySelector('i').style.width=p+'%';el.setAttribute('aria-valuenow',Math.round(p));}}
 
 function start(){
   const base=liveQuestions().filter(q=>!activeLevels||activeLevels.includes(q.lv));
@@ -1069,7 +1081,7 @@ function renderQ(){
   viewOrder=shuffle(q.options.map((_,i)=>i)); // 選択肢の並びを毎回シャッフル（正解位置の偏りを解消）
   const r=srsOf(q);
   s.innerHTML=`
-    <div class="bar" id="bar"><i></i></div>
+    <div class="bar" id="bar" role="progressbar" aria-label="進捗" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
     <div class="toprow">
       <span><span class="lvtag lv${q.lv}">${LV_INFO[q.lv].name}</span> <span class="cat">${esc(q.cat)}</span></span>
       <span class="meta">問題 ${idx+1} / ${order.length}　スコア ${score}</span>
@@ -1083,11 +1095,13 @@ function renderQ(){
       <div class="opts" id="opts"></div>
       <div id="hintrow"></div>
     </div>
-    <div id="fb"></div>
+    <div id="fb" aria-live="polite"></div>
     <div id="delrow"><button class="delbtn" id="delq">🗑 この問題を削除</button></div>`;
   setBar(idx/order.length*100);
   renderConfidence();
   document.getElementById('delq').onclick=deleteCurrent;
+  // 設問遷移時に見出しへフォーカスを移し、キーボード/支援技術の文脈を保つ
+  const qEl=s.querySelector('.question');if(qEl){qEl.setAttribute('tabindex','-1');qEl.focus();}
 }
 
 // 回答前に自信を聞く（分かったつもり対策）。選んでから選択肢を表示する。
@@ -1160,8 +1174,10 @@ function pick(i){
   for(let k=0;k<opts.length;k++){
     opts[k].disabled=true;
     const oi=Number(opts[k].dataset.oi);
-    if(oi===q.answer)opts[k].classList.add('correct');
-    else if(oi===i)opts[k].classList.add('wrong');
+    const mk=opts[k].querySelector('.mk');
+    // 色だけに依存しないよう、正誤を記号(✓/✕)でも示す
+    if(oi===q.answer){opts[k].classList.add('correct');if(mk)mk.textContent='✓';}
+    else if(oi===i){opts[k].classList.add('wrong');if(mk)mk.textContent='✕';}
   }
   // 自信×正誤の4象限メッセージ（分かったつもり対策）
   let quad,quadCls;
@@ -1275,8 +1291,8 @@ function catScreen(){
     </div>
     <div style="margin-bottom:12px;font-size:14px;color:var(--txt2);">出題モード</div>
     <div class="pills" id="modes">
-      <button class="pill${mode==='practice'?' on':''}" data-m="practice">復習（期限到来・苦手を優先）${due>0?` ・ ${due}問`:''}</button>
-      <button class="pill${mode==='all'?' on':''}" data-m="all">全問（カテゴリ内ランダム）</button>
+      <button class="pill${mode==='practice'?' on':''}" data-m="practice" aria-pressed="${mode==='practice'}">復習（期限到来・苦手を優先）${due>0?` ・ ${due}問`:''}</button>
+      <button class="pill${mode==='all'?' on':''}" data-m="all" aria-pressed="${mode==='all'}">全問（カテゴリ内ランダム）</button>
     </div>
     <div style="margin:18px 0 8px;font-size:14px;color:var(--txt2);">カテゴリ（タップで切替）</div>
     <div class="pills" id="pills"></div>
@@ -1292,6 +1308,7 @@ function catScreen(){
   cats.forEach(c=>{
     const b=document.createElement('button');
     b.className='pill'+(activeCats.includes(c)?' on':'');
+    b.setAttribute('aria-pressed',activeCats.includes(c));
     b.textContent=c;
     b.onclick=()=>{
       if(activeCats.includes(c))activeCats=activeCats.filter(x=>x!==c);
