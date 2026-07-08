@@ -9,7 +9,7 @@ description: スクショや状況説明から「ベスト案を初心者にも�
 **(1) どれがベストかを初心者にもわかる例えを交えて簡潔に説明** し、
 **(2) その理解を engineer-quiz の選択式クイズに追加して commit & push** する。
 
-対象ファイル: `/Users/tkhr/development/engineer-quiz/index.html`（このリポジトリのトップにある単一HTML。`QUESTIONS` 配列と `GLOSSARY` オブジェクトを持つ）。
+対象ファイル: リポジトリルート直下の `index.html`（このスキルが同梱された単一HTML。`QUESTIONS` 配列と `GLOSSARY` オブジェクトを持つ）。パスは `$CLAUDE_PROJECT_DIR/index.html` で解決する。
 
 ## このスキルの狙い
 
@@ -22,8 +22,7 @@ description: スクショや状況説明から「ベスト案を初心者にも�
 ユーザーが貼ったスクショ／状況について、まず次を満たす説明を返す:
 - **結論（どれがベストか）を最初に1行で**言い切る。
 - **初心者にもわかる「例え」を必ず1つ**入れる（引っ越し・家系図・空港の保安検査など、身近なもの）。
-- **各選択肢の位置づけを簡潔に**（表が有効。◎○△で評価＋理由ひとことずつ）。
-- 冗長にしない。シンプルで読み切れる長さに。
+- **各選択肢の位置づけを簡潔に**（表が有効。◎○△で評価＋理由ひとことずつ）。読み切れる長さで。
 - 可能なら、過去に追加した関連クイズの考え方（「1PR=1目的」「最小マイグレーション」など）と地続きであることに触れる。
 
 ### Step 2. クイズ化する（データ追加）
@@ -48,31 +47,14 @@ description: スクショや状況説明から「ベスト案を初心者にも�
 - 初心者向けに、なるべくやさしい言葉で。
 
 ### Step 4. 検証（必須・自己申告に頼らない）
-追加後、必ず次を Node で機械チェックする。1つでも落ちたら直してから進む:
+追加後、必ず同梱スクリプトで機械チェックする。`=== PASS ===` 以外なら直してから進む:
 
 ```bash
-node -e "
-const fs=require('fs');const h=fs.readFileSync('/Users/tkhr/development/engineer-quiz/index.html','utf8');
-const m=h.match(/const QUESTIONS = \[[\s\S]*?\n\];/)[0].replace('const QUESTIONS','globalThis.QUESTIONS');
-const g=h.match(/const GLOSSARY=\{[\s\S]*?\n\};/)[0].replace('const GLOSSARY','globalThis.GLOSSARY');
-eval(m);eval(g);
-let ok=true;
-const keys=QUESTIONS.map(q=>q.cat+'|'+q.q);const dup=keys.filter((k,i)=>keys.indexOf(k)!==i);
-if(dup.length){console.log('NG 重複:',dup);ok=false;}
-QUESTIONS.forEach((q,i)=>{
-  if(q.options.length>4||q.options.length<2){console.log('NG 択数',i);ok=false;}
-  if(q.answer<0||q.answer>=q.options.length){console.log('NG answer範囲外',i);ok=false;}
-  if(new Set(q.options).size!==q.options.length){console.log('NG 選択肢重複',i);ok=false;}
-  if(q.options.some(o=>!o||!String(o).trim())){console.log('NG 空選択肢',i);ok=false;}
-});
-new Function(h.match(/<script>([\s\S]*?)<\/script>/)[1]); // script全体の構文
-console.log('QUESTIONS:',QUESTIONS.length,'GLOSSARY:',Object.keys(GLOSSARY).length,'dup:',dup.length||'なし');
-console.log(ok?'=== PASS ===':'=== NG ===');
-process.exit(ok?0:1);
-"
+node "$CLAUDE_PROJECT_DIR/.claude/skills/quiz/scripts/validate.js"
+# $CLAUDE_PROJECT_DIR が無い環境ではリポジトリルートで: node .claude/skills/quiz/scripts/validate.js
 ```
 
-チェック内容: JSON/JS構文・`cat|q`重複なし・全問2〜4択・answer範囲内・選択肢の重複/空なし・script全体がパースできること。
+チェック内容: JSON/JS構文・`cat|q`重複なし・全問2〜4択・answer範囲内・選択肢の重複/空なし・`<script>`全体がパースできること。ロジックは [scripts/validate.js](scripts/validate.js) にあり、チェックを増やすときはそこを直す（本文と重複させない）。
 
 ### Step 5. commit & push
 - コミットメッセージは `feat: <日本語で何のクイズを足したか簡潔に>`。
@@ -80,8 +62,13 @@ process.exit(ok?0:1);
 - main ブランチで作業してよい（このリポはGitHub Pagesで公開、HTMLキャッシュは抑止済み）。
 
 ```bash
-cd /Users/tkhr/development/engineer-quiz && git add index.html && git commit -m "feat: ..." && git push
+git -C "$CLAUDE_PROJECT_DIR" add index.html
+git -C "$CLAUDE_PROJECT_DIR" commit -m "feat: ..."
+git -C "$CLAUDE_PROJECT_DIR" push
 ```
+
+`git push` が HTTPS の資格情報不一致で 403 になる場合は、SSH remote で通す:
+`git -C "$CLAUDE_PROJECT_DIR" push git@github.com:<owner>/engineer-quiz.git HEAD:main`
 
 ### Step 6. 報告
 追加した問題の一覧（カテゴリ｜設問の要点）を表で示し、何問→何問になったか・反映はGitHub Pagesに数分かかる旨を伝える。
