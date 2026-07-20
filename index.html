@@ -183,6 +183,10 @@
   .lvtag.lv2{border-color:var(--info);color:var(--info);}
   .lvtag.lv3{border-color:var(--ng);color:#ff9d9d;}
 
+  /* 種別（基礎知識 / 案件特有）選択画面：レベルカードのスタイルを流用 */
+  .trackcard.basic{border-left-color:var(--accent2);}
+  .trackcard.proj{border-left-color:var(--accent);}
+
   /* 視覚的な動きを抑える設定の尊重 */
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
@@ -1171,11 +1175,24 @@ const LS_SRS="learnquiz_srs_v1";
 let pool=QUESTIONS.slice();
 let activeCats=null;
 let activeLevels=null; // null=全レベル / [1]や[1,2]など選択中のレベル
+let activeTrack=null;  // null=両方 / "基礎"（エンジニア基礎知識）/ "案件"（案件特有の詳細）
 const LV_INFO={
   1:{name:"初級",desc:"用語・基礎概念・原則。まず土台を固めたい人向け（「〜とは何か」を中心に）。"},
   2:{name:"中級",desc:"実務の判断・トラブル対応。状況を読んで定石を選ぶ問題が中心。"},
   3:{name:"上級",desc:"設計・セキュリティ・DBの複合的で深いトレードオフを問う問題。"}
 };
+const TRACK_INFO={
+  "基礎":{name:"エンジニア基礎知識",desc:"言語・Git・DB・Web・設計原則など、案件を問わず通用する土台。用語・基礎概念が中心。"},
+  "案件":{name:"案件特有の詳細",desc:"この開発で実際に出会った判断・トラブル対応・設計選択。プロジェクト固有の状況が中心。"}
+};
+// 各問がどちらの種別かを返す。優先度: 明示のq.track > cat名の規約（"基礎 / xxx"と"用語理解"は基礎）> それ以外は案件。
+function trackOf(q){
+  if(q.track==="基礎"||q.track==="案件")return q.track;
+  if(/^基礎\s*\//.test(q.cat)||q.cat==="用語理解")return "基礎";
+  return "案件";
+}
+// 削除済みを除いた上で、選択中の種別で絞った問題リスト
+function trackedLive(){return liveQuestions().filter(q=>!activeTrack||trackOf(q)===activeTrack);}
 let mode="practice"; // "practice"=苦手・期限到来を優先 / "all"=カテゴリ内ランダム
 let order=[],idx=0,score=0,answered=false,history=[];
 // 1問内の回答状態（自信ヒアリング・段階ヒント・分かったつもり対策）
@@ -1242,7 +1259,7 @@ function renderBest(){
 function setBar(p){const el=document.getElementById('bar');if(el){el.querySelector('i').style.width=p+'%';el.setAttribute('aria-valuenow',Math.round(p));}}
 
 function start(){
-  const base=liveQuestions().filter(q=>!activeLevels||activeLevels.includes(q.lv));
+  const base=trackedLive().filter(q=>!activeLevels||activeLevels.includes(q.lv));
   pool=activeCats?base.filter(q=>activeCats.includes(q.cat)):base.slice();
   if(mode==="practice"){
     // 期限到来分だけを出題。「自信あり×不正解(思い込み)」→未学習/期限到来 の順で優先。
@@ -1436,7 +1453,7 @@ function renderResult(){
   // 「自信あり×不正解（思い込み）」の件数を集計＝最優先で潰すべきもの
   const confMiss=history.filter(h=>!h.correct&&h.confidence).length;
   const selfSolved=history.filter(h=>h.correct&&!h.usedHint).length;
-  const remainDue=dueCount(mode==="practice"?pool:liveQuestions().filter(q=>!activeLevels||activeLevels.includes(q.lv)));
+  const remainDue=dueCount(mode==="practice"?pool:trackedLive().filter(q=>!activeLevels||activeLevels.includes(q.lv)));
   document.getElementById('screen').innerHTML=`
     <div class="result">
       <div class="big">${pct}%</div>
@@ -1461,12 +1478,42 @@ function renderResult(){
 }
 
 // 最初の入り口：レベル(初級/中級/上級)を選ぶ画面
-function levelScreen(){
+// 最初の画面：エンジニア基礎知識 / 案件特有の詳細 を選ぶ
+function trackScreen(){
   const live=liveQuestions();
-  const cnt=l=>live.filter(q=>q.lv===l).length;
+  const cnt=t=>live.filter(q=>trackOf(q)===t).length;
   const s=document.getElementById('screen');
   s.innerHTML=`
-    <div style="margin-bottom:10px;font-size:14px;color:var(--txt2);">まずレベルを選んでください</div>
+    <div style="margin-bottom:10px;font-size:14px;color:var(--txt2);">まず種別を選んでください</div>
+    <div class="levels">
+      <button class="levelcard trackcard basic" data-t="基礎">
+        <div class="lvname">${TRACK_INFO["基礎"].name}<span class="lvcnt">${cnt("基礎")}問</span></div>
+        <div class="lvdesc">${TRACK_INFO["基礎"].desc}</div>
+      </button>
+      <button class="levelcard trackcard proj" data-t="案件">
+        <div class="lvname">${TRACK_INFO["案件"].name}<span class="lvcnt">${cnt("案件")}問</span></div>
+        <div class="lvdesc">${TRACK_INFO["案件"].desc}</div>
+      </button>
+    </div>
+    <div class="actions">
+      <button class="ghost" onclick="activeTrack=null;activeLevels=null;activeCats=null;levelScreen()">両方まとめて選ぶ（${live.length}問）</button>
+    </div>`;
+  s.querySelectorAll('.trackcard').forEach(b=>{
+    b.onclick=()=>{activeTrack=b.getAttribute('data-t');activeLevels=null;activeCats=null;levelScreen();};
+  });
+}
+
+function levelScreen(){
+  const live=trackedLive();
+  const cnt=l=>live.filter(q=>q.lv===l).length;
+  const trackLabel=activeTrack?TRACK_INFO[activeTrack].name:'両方';
+  const s=document.getElementById('screen');
+  s.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px;">
+      <span class="lvtag">種別：${esc(trackLabel)}（${live.length}問）</span>
+      <button class="pill" onclick="trackScreen()">↩ 種別を選び直す</button>
+    </div>
+    <div style="margin-bottom:10px;font-size:14px;color:var(--txt2);">レベルを選んでください</div>
     <div class="levels">
       ${[1,2,3].map(l=>`<button class="levelcard lv${l}" data-l="${l}">
           <div class="lvname">${LV_INFO[l].name}<span class="lvcnt">${cnt(l)}問</span></div>
@@ -1482,17 +1529,18 @@ function levelScreen(){
 }
 
 function catScreen(){
-  const lvLive=liveQuestions().filter(q=>!activeLevels||activeLevels.includes(q.lv));
+  const lvLive=trackedLive().filter(q=>!activeLevels||activeLevels.includes(q.lv));
   const cats=[...new Set(lvLive.map(q=>q.cat))];
   if(!activeCats)activeCats=cats.slice();
   else activeCats=activeCats.filter(c=>cats.includes(c));
   const due=dueCount(lvLive);
+  const trackLabel=activeTrack?TRACK_INFO[activeTrack].name:'両方';
   const lvLabel=activeLevels?activeLevels.map(l=>LV_INFO[l].name).join('・'):'すべてのレベル';
   const s=document.getElementById('screen');
   s.innerHTML=`
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px;">
-      <span class="lvtag${activeLevels&&activeLevels.length===1?' lv'+activeLevels[0]:''}">レベル：${lvLabel}（${lvLive.length}問）</span>
-      <button class="pill" onclick="levelScreen()">↩ レベルを選び直す</button>
+      <span class="lvtag${activeLevels&&activeLevels.length===1?' lv'+activeLevels[0]:''}">${esc(trackLabel)}／${lvLabel}（${lvLive.length}問）</span>
+      <button class="pill" onclick="levelScreen()">↩ レベル/種別を選び直す</button>
     </div>
     <div style="margin-bottom:12px;font-size:14px;color:var(--txt2);">出題モード</div>
     <div class="pills" id="modes">
@@ -1527,7 +1575,7 @@ function catScreen(){
 
 initGlossary();
 renderBest();
-levelScreen();
+trackScreen();
 </script>
 </body>
 </html>
