@@ -1,0 +1,1972 @@
+{
+ "source": "roadmap.sh (kamranahmedse/developer-roadmap)",
+ "roadmaps": [
+  "backend",
+  "frontend",
+  "git-github",
+  "overview"
+ ],
+ "fetched_at": "2026-08-25",
+ "policy": "重複・AI関連・現行PJで使わない製品・見出しノードを除外。順序は roadmap.sh の描画順（上から下＝学習順）。2次剪定で製品名の取りこぼし・GitHubのコミュニティ機能・親不明ラベルを除外し、reset のオプション等は親を補ってリネーム。git-github は GitHub API・Actions内部・hooks個別イベント・上級機能を除外し、既存問題から逆算した体系外34単位を overview 等へ追加",
+ "unit_count": 219,
+ "units": [
+  {
+   "id": "u001",
+   "label": "How does the internet work?",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "yCnn-NfSxIybUQ2iTuUGq",
+   "source": "roadmap.sh",
+   "genre": "全体像 / リクエストの流れ"
+  },
+  {
+   "id": "u002",
+   "label": "JavaScript",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "8-lO-v6jCYYoklEJXULxN",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 登場人物と役割"
+  },
+  {
+   "id": "u003",
+   "label": "Go",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "BdXbcz4-ar3XOX0wIKzBp",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u004",
+   "label": "What is HTTP?",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "R12sArWVpbIs_PHxBqVaR",
+   "source": "roadmap.sh",
+   "genre": "全体像 / リクエストの流れ"
+  },
+  {
+   "id": "u005",
+   "label": "What is Domain Name?",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "ZhSuu2VArnzPDp6dPQQSC",
+   "source": "roadmap.sh",
+   "genre": "サーバー / ネットワークとDNS"
+  },
+  {
+   "id": "u006",
+   "label": "What is hosting?",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "aqMaEY8gkKMikiqleV5EP",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u007",
+   "label": "DNS and how it works?",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "hkxw9jPGYphmjhTjw8766",
+   "source": "roadmap.sh",
+   "genre": "全体像 / リクエストの流れ"
+  },
+  {
+   "id": "u008",
+   "label": "HTML",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "9-pCsW650T1mfj5dmRB9L",
+   "source": "roadmap.sh",
+   "genre": "フロント / HTML と CSS"
+  },
+  {
+   "id": "u009",
+   "label": "CSS",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "utA1W2O6pzoV_LbtDE5DN",
+   "source": "roadmap.sh",
+   "genre": "フロント / HTML と CSS"
+  },
+  {
+   "id": "u010",
+   "label": "Browsers and how they work?",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "P82WFaTPgQEPNp5IIuZ1Y",
+   "source": "roadmap.sh",
+   "genre": "全体像 / リクエストの流れ"
+  },
+  {
+   "id": "u011",
+   "label": "Version Control Systems",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "ezdqQW9wTUw93F6kjOzku",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u012",
+   "label": "Git",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "_I1E__wCIVrhjMk6IMieE",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u013",
+   "label": "Repo Hosting Services",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "NvUcSDWBhzJZ31nzT4UlE",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u014",
+   "label": "GitHub",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "ptD8EVqwFUYr4W5A_tABY",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u015",
+   "label": "Migrations",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "MOLAXgs0CMCT7o84L0EaK",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u016",
+   "label": "PostgreSQL",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "FihTrMO56kj9jT8O_pO2T",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u017",
+   "label": "REST",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "lfNFDZZNdrB0lbEaMtU71",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u018",
+   "label": "JSON APIs",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "sNceS4MpSIjRkWhNDmrFg",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u019",
+   "label": "Relational Databases",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "r45b461NxLN6wBODJ5CNP",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u020",
+   "label": "SOAP",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "sSNf93azjuyMzQqIHE0Rh",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u021",
+   "label": "gRPC",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "J-TOE2lT4At1mSdNoxPS1",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u022",
+   "label": "N+1 Problem",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "bQnOAu863hsHdyNMNyJop",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u023",
+   "label": "GraphQL",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "zp3bq38tMnutT2N0tktOW",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u024",
+   "label": "Open API Specs",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "9cD5ag1L0GqHx4_zxc5JX",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u025",
+   "label": "Authentication",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "PY9G7KQy8bF6eIdr1ydHf",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u026",
+   "label": "JWT",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "UxS_mzVUjLigEwKrXnEeB",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u027",
+   "label": "OAuth",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "vp-muizdICcmU0gN8zmkS",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u028",
+   "label": "Caching",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "uPjCrDGA2MHylWXbZvMBM",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u029",
+   "label": "Basic Authentication",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "yRiJgjjv2s1uV9vgo3n8m",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u030",
+   "label": "Token Authentication",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "0rGj7FThLJZouSQUhnqGW",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u031",
+   "label": "Cookie Based Auth",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "ffzsh8_5yRq85trFt9Xhk",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u032",
+   "label": "OpenID",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "z3EJBpgGm0_Uj3ymhypbX",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u033",
+   "label": "SAML",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "UCHtaePVxS-0kpqlYxbfC",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u034",
+   "label": "HTTP Caching",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "KWTbEVX_WxS8jmSaAX3Fe",
+   "source": "roadmap.sh",
+   "genre": "全体像 / リクエストの流れ"
+  },
+  {
+   "id": "u035",
+   "label": "Web Security",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "RBrIP5KbVQ2F0ly7kMfTo",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u036",
+   "label": "OWASP Risks",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "AAgciyxuDvS2B_c6FRMvT",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u037",
+   "label": "HTTPS",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "x-WBJjBd8u93ym5gtxGsR",
+   "source": "roadmap.sh",
+   "genre": "サーバー / ネットワークとDNS"
+  },
+  {
+   "id": "u038",
+   "label": "SSL/TLS",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "0v3OsaghJEGHeXX0c5kqn",
+   "source": "roadmap.sh",
+   "genre": "サーバー / ネットワークとDNS"
+  },
+  {
+   "id": "u039",
+   "label": "CORS",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "LU6WUbkWKbPM1rb2_gEqa",
+   "source": "roadmap.sh",
+   "genre": "全体像 / つながりの切り分け"
+  },
+  {
+   "id": "u040",
+   "label": "Server Security",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "TZ0BWOENPv6pQm8qYB8Ow",
+   "source": "roadmap.sh",
+   "genre": "サーバー / ネットワークとDNS"
+  },
+  {
+   "id": "u041",
+   "label": "CSP",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "HgQBde1zLUFtlwB66PR6_",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u042",
+   "label": "Webアプリケーションの構成",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "Nx7mjvYgqLpmJ0_iSx5of",
+   "source": "roadmap.sh",
+   "genre": "全体像 / リクエストの流れ"
+  },
+  {
+   "id": "u043",
+   "label": "Code Reviews",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "0TMdly8yiqnNR8sx36iqc",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u044",
+   "label": "Refactoring",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "EYT2rTLZ8tUW2u8DOnAWF",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u045",
+   "label": "CI / CD",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "mGfD7HfuP184lFkXZzGjG",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u046",
+   "label": "Integration Testing",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "381Kw1IMRv7CJp-Uf--qd",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u047",
+   "label": "Unit Testing",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "3OYm6b9f6WOrKi4KTOZYK",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u048",
+   "label": "Functional Testing",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "NAGisfq2CgeK3SsuRjnMw",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u049",
+   "label": "Testing",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "STQQbPa7PE3gbjMdL6P-t",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u050",
+   "label": "Transactions",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "rq_y_OBMD9AH_4aoecvAi",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u051",
+   "label": "ORMs",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "Z7jp_Juj5PffSxV7UZcBb",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u052",
+   "label": "ACID",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "qSAdfaGUfn8mtmDjHJi3z",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u053",
+   "label": "Normalization",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "Ge2SnKBrQQrU-oGLz6TmT",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u054",
+   "label": "Message Brokers",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "nJ5FpFgGCRaALcWmAKBKT",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u055",
+   "label": "Profiling Performance",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "SYXJhanu0lFmGj2m2XXhS",
+   "source": "roadmap.sh",
+   "genre": "全体像 / つながりの切り分け"
+  },
+  {
+   "id": "u056",
+   "label": "Monolith",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "Ke522R-4k6TDeiDRyZbbU",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u057",
+   "label": "Microservices",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "K55h3aqOGe6-hgVhiFisT",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u058",
+   "label": "SOA",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "tObmzWpjsJtK4GWhx6pwB",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u059",
+   "label": "Serverless",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "nkmIv3dNwre4yrULMgTh3",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u060",
+   "label": "Architectural Patterns",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "tHiUpG9LN35E5RaHddMv5",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u061",
+   "label": "Search Engines",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "gKTSe9yQFVbPVlLzWB0hC",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u062",
+   "label": "Twelve Factor Apps",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "8DmabQJXlrT__COZrDVTV",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u063",
+   "label": "Server Sent Events",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "RUSdlokJUcEYbCvq5FJBJ",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u064",
+   "label": "Database Indexes",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "y-xkHFE9YzhNIX3EiWspL",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u065",
+   "label": "Real-Time Data",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "5XGvep2qoti31bsyqNzrU",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u066",
+   "label": "WebSockets",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "sVuIdAe08IWJVqAt4z-ag",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u067",
+   "label": "Data Replication",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "wrl7HHWXOaxoKVlNZxZ6d",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u068",
+   "label": "Long / Short Polling",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "osvajAJlwGI3XnX0fE-kA",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u069",
+   "label": "Sharding Strategies",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "zWstl08R4uzqve4BdYurp",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u070",
+   "label": "CAP Theorem",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "LAdKDJ4LcMaDWqslMvE8X",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u071",
+   "label": "Scaling Databases",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "95d9itpUZ4s9roZN8kG9x",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u072",
+   "label": "NoSQL Databases",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "F8frGuv1dunOdcVJ_IiGs",
+   "source": "roadmap.sh",
+   "genre": "サーバー / データベース"
+  },
+  {
+   "id": "u073",
+   "label": "Building For Scale",
+   "roadmap": "backend",
+   "level": "topic",
+   "source_id": "SHmbcMRsc3SygEDksJQBD",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u074",
+   "label": "Observability",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "Z01E67D6KjrShvQCHjGR7",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u075",
+   "label": "Graceful Degradation",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "G9AI_i3MkUE1BsO3_-PH7",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u076",
+   "label": "Instrumentation",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "4X-sbqpP0NDhM99bKdqIa",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u077",
+   "label": "Throttling",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "qAu-Y4KI2Z_y-EqiG86cR",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u078",
+   "label": "Monitoring",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "QvMEEsXh0-rzn5hDGcmEv",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u079",
+   "label": "Backpressure",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "JansCqGDyXecQkD1K7E7e",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u080",
+   "label": "Telemetry",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "neVRtPjIHP_VG7lHwfah0",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u081",
+   "label": "Circuit Breaker",
+   "roadmap": "backend",
+   "level": "subtopic",
+   "source_id": "spkiQTPvXY4qrhhVUkoPV",
+   "source": "roadmap.sh",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u082",
+   "label": "Internet",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "VlNNwIEDWqQXtqkHWJYzC",
+   "source": "roadmap.sh",
+   "genre": "全体像 / リクエストの流れ"
+  },
+  {
+   "id": "u083",
+   "label": "npm",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "ib_FHinhrw8VuSet-xMF7",
+   "source": "roadmap.sh",
+   "genre": "フロント / JavaScript と型"
+  },
+  {
+   "id": "u084",
+   "label": "Version Control",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "NIY7c4TQEEHx0hATu-k5C",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u085",
+   "label": "VCS Hosting",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "MXnFhZlNB1zTsBFDyni9H",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u086",
+   "label": "Package Managers",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "IqvS1V-98cxko3e9sBQgP",
+   "source": "roadmap.sh",
+   "genre": "フロント / JavaScript と型"
+  },
+  {
+   "id": "u087",
+   "label": "CSS Frameworks",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "XDTD8el6OwuQ55wC-X4iV",
+   "source": "roadmap.sh",
+   "genre": "フロント / HTML と CSS"
+  },
+  {
+   "id": "u088",
+   "label": "Vue.js",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "ERAdwL1G9M1bnx-fOm5ZA",
+   "source": "roadmap.sh",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u089",
+   "label": "Tailwind",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "eghnfG4p7i-EDWfp3CQXC",
+   "source": "roadmap.sh",
+   "genre": "フロント / HTML と CSS"
+  },
+  {
+   "id": "u090",
+   "label": "Auth Strategies",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "U5mD5FmVx7VWeKxDpQxB5",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u091",
+   "label": "Module Bundlers",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "hkSc_1x09m7-7BO7WzlDT",
+   "source": "roadmap.sh",
+   "genre": "フロント / JavaScript と型"
+  },
+  {
+   "id": "u092",
+   "label": "Linters & Formatters",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "9VcGfDBBD8YcKatj4VcH1",
+   "source": "roadmap.sh",
+   "genre": "フロント / JavaScript と型"
+  },
+  {
+   "id": "u093",
+   "label": "Prettier",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "zbkpu_gvQ4mgCiZKzS1xv",
+   "source": "roadmap.sh",
+   "genre": "フロント / JavaScript と型"
+  },
+  {
+   "id": "u094",
+   "label": "ESLint",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "NFjsI712_qP0IOmjuqXar",
+   "source": "roadmap.sh",
+   "genre": "フロント / JavaScript と型"
+  },
+  {
+   "id": "u095",
+   "label": "Vitest",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "hVQ89f6G0LXEgHIOKHDYq",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u096",
+   "label": "Web APIs",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "3HgiMfqihjWceSxd6ei8s",
+   "source": "roadmap.sh",
+   "genre": "フロント / ブラウザの仕組み"
+  },
+  {
+   "id": "u097",
+   "label": "GitHub Pages",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "vpzh9bNXCxgdDFQLsot2_",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u098",
+   "label": "Nuxt.js",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "BBsXxkbbEG-gnbM1xXKrj",
+   "source": "roadmap.sh",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u099",
+   "label": "SSR",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "Cxspmb14_0i1tfw-ZLxEu",
+   "source": "roadmap.sh",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u100",
+   "label": "Deployment",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "A1ZUy16cVRYqmHxoCtUb0",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u101",
+   "label": "Type Checkers",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "NQ95TJCe3E1IwEuBa__D6",
+   "source": "roadmap.sh",
+   "genre": "フロント / JavaScript と型"
+  },
+  {
+   "id": "u102",
+   "label": "SSG",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "n0q32YhWEIAUwbGXexoqV",
+   "source": "roadmap.sh",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u103",
+   "label": "Design Systems",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "ap4h4v5Sr4jBH3GwWSH8x",
+   "source": "roadmap.sh",
+   "genre": "フロント / HTML と CSS"
+  },
+  {
+   "id": "u104",
+   "label": "DevTools Usage",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "JWU9jc12_ewaIKt3qWLcp",
+   "source": "roadmap.sh",
+   "genre": "全体像 / リクエストの流れ"
+  },
+  {
+   "id": "u105",
+   "label": "Performance",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "6d8cjWZ4BuUjwT0seiuzJ",
+   "source": "roadmap.sh",
+   "genre": "フロント / ブラウザの仕組み"
+  },
+  {
+   "id": "u106",
+   "label": "Service Workers",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "66ya3WdtlkjQyBTc3Lein",
+   "source": "roadmap.sh",
+   "genre": "フロント / 通信とパフォーマンス"
+  },
+  {
+   "id": "u107",
+   "label": "Cache-Control",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "tWDmeXItfQDxB8Jij_V4L",
+   "source": "roadmap.sh",
+   "genre": "フロント / ブラウザの仕組み"
+  },
+  {
+   "id": "u108",
+   "label": "Streamed Responses",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "FyNXhHq1VIASNq-LI7JIu",
+   "source": "roadmap.sh",
+   "genre": "フロント / 通信とパフォーマンス"
+  },
+  {
+   "id": "u109",
+   "label": "Web Components",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "ruoFa3M4bUE3Dg6GXSiUI",
+   "source": "roadmap.sh",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u110",
+   "label": "Accessibility",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "e-k6EhoxYG9h0x6vWOrDh",
+   "source": "roadmap.sh",
+   "genre": "フロント / HTML と CSS"
+  },
+  {
+   "id": "u111",
+   "label": "HTML Templates",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "Hk8AVonOd693_y1sykPqd",
+   "source": "roadmap.sh",
+   "genre": "フロント / HTML と CSS"
+  },
+  {
+   "id": "u112",
+   "label": "PWAs",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source_id": "PoM77O2OtxPELxfrW1wtl",
+   "source": "roadmap.sh",
+   "genre": "フロント / 通信とパフォーマンス"
+  },
+  {
+   "id": "u113",
+   "label": "Custom Elements",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "VxiQPgcYDFAT6WgSRWpIA",
+   "source": "roadmap.sh",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u114",
+   "label": "Shadow DOM",
+   "roadmap": "frontend",
+   "level": "subtopic",
+   "source_id": "-SpsNeOZBkQfDA-rwzgPg",
+   "source": "roadmap.sh",
+   "genre": "フロント / ブラウザの仕組み"
+  },
+  {
+   "id": "u115",
+   "label": "What is Version Control?",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "bY6b1GV2XQQ52NOx8gWFj",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u116",
+   "label": "git init",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "1iOkbO5juk2LO-WZHx_W6",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u117",
+   "label": "Why use Version Control?",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "dhIx1GnynvbSUriqYLUt0",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u118",
+   "label": "git config",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "NMCWgzhhfUvFOMO5GbF_u",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u119",
+   "label": "Git vs Other VCS",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "_jSTrYN9G8EsGHkbusKPU",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u120",
+   "label": "Local vs Global Config",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "tVvxC5JQgUb_B8kOqYpD8",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u121",
+   "label": "What is a Repository",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "PtU5Qwfzn3N1i3oRlCGoR",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u122",
+   "label": "Working Directory",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "Sv36oxTZwlUv-i1K28NeP",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u123",
+   "label": "Cloning Repositories",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "1Koej79yTv-OAswVZwgGq",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u124",
+   "label": "Staging Area",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "h71Tx3nkfUrnhaqcHlDkQ",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u125",
+   "label": "Branching Basics",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "bXfCUG3h1TIFPgD4WUDph",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u126",
+   "label": "Managing Remotes",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "sBQOInoFBU9XfkPZ-JlyT",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u127",
+   "label": "Committing Changes",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "2_z3R7seCvQVj-Na4H1SV",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u128",
+   "label": "Creating Branch",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "OegitQ5Ngjvd3ZfMpfrkM",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u129",
+   "label": "Pushing / Pulling Changes",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "ZVMCh9om37ee1qsecFa-N",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u130",
+   "label": "Renaming Branch",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "_dPOVUbxApx0pfKPH8fgr",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u131",
+   "label": "Fetch without Merge",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "Gybnekbd1rJKTOf4hJ4Sh",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u132",
+   "label": ".gitignore",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "oz2oRAhaEQb0Fm3aRJQG8",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u133",
+   "label": "Deleting Branch",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "1uDenoQ6zu7CT69FR2iQB",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u134",
+   "label": "Viewing Commit History",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "IfUm5D_zNaUKMd4HX4Fi4",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u135",
+   "label": "Git Remotes",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "aWx9WHUrgofcTr8B-fQYe",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u136",
+   "label": "Checkout Branch",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "PtRo-wGiNAagZ6CykfvMr",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u137",
+   "label": "Fast-Forward vs Non-FF",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "agtPWS8j6i6wQPk10cy8E",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u138",
+   "label": "Merging Basics",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "sNuy6NMjLOEkJlqdEjFPq",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u139",
+   "label": "Rebase",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "99FVJ3Zs8n6lr8L95mG6g",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u140",
+   "label": "Squash",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "Z-srOhYFGVEKDexlJ6cjt",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u141",
+   "label": "Merge Strategies",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "0rHDUbAdXqH9zQW2VfJ8v",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u142",
+   "label": "Handling Conflicts",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "9Dt4Gyiiq5jteWSKxsRMK",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u143",
+   "label": "Cherry Picking Commits",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "eFf2fesrs-1aVM5tH3ORQ",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u144",
+   "label": "Creating Repositories",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "c_FO6xMixrrMo6iisfsvl",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u145",
+   "label": "Private vs Public",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "HEqBbw_A4ZbJI5zEy8ViN",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u146",
+   "label": "Forking vs Cloning",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "l1Wf7Pe_ah8ycCgslfSK4",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u147",
+   "label": "Commit Messages",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "7lRUYWNSpHvJ-QyIE8RMa",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u148",
+   "label": "Markdown",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "1Ulxl4VUvRSfyCPpi-iv8",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u149",
+   "label": "Issues",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "crdllx5cH_seIpgVPvHg_",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u150",
+   "label": "Branch Naming",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "ks1Pip-RM-UWD6zuF2j4n",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u151",
+   "label": "Project Readme",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "WIVr7JxO1AJTNObW8mtY3",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u152",
+   "label": "PR from a Fork",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "8lXXVFkgK6n5IHaYkYe3l",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u153",
+   "label": "Pull Requests",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "x6eILrLCQrVpz4j8uOuy6",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u154",
+   "label": "PR Guidelines",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "GwDNk2HBjASr_NWIL4G3-",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u155",
+   "label": "Collaboration on GitHub",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "d_GNnB6PBINz1jxGNWAE-",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u156",
+   "label": "Documentation",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "D2WIExwfSnkAPIa5O-Hp5",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u157",
+   "label": "Contribution Guidelines",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "pJ-najh7dXhhYA_0bDiR5",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u158",
+   "label": "Clean Git History",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "i3AbARgzQtxtlB-1AS8zv",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u159",
+   "label": "Git Stash Basics",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "X9K3PBpGsMoXkJsKdJPI7",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u160",
+   "label": "Linear vs Non-Linear",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "lXC07j6dOa3rQixY1P-Ob",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u161",
+   "label": "Working in a Team",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "yMx3LdadPz4g25CL3N8da",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u162",
+   "label": "HEAD",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "V8nLIvddyOKTzEjOJX5GW",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u163",
+   "label": "History",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "zen3RRdK9_nPAYgicRoHk",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u164",
+   "label": "Detached HEAD",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "0cLf7FiI9CX--UX45sm2f",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u165",
+   "label": "git log options",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "qFEonbCMLri8iA0yONwuf",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u166",
+   "label": "git revert",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "dLr55Om7IOvI53c1DgTKc",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u172",
+   "label": "git reset",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "igrR7LguU1jemg_mf_AD6",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u174",
+   "label": "Viewing Diffs",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "-0zQvCHG8jS_ghSjmTeIx",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u175",
+   "label": "Staged Changes",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "mzjtCdpke1ayHcEuS-YUS",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u177",
+   "label": "Unstaged Changes",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "uxqJzQFRcALqatNRIWR0w",
+   "source": "roadmap.sh",
+   "genre": "Git / 仕組みと3つの領域"
+  },
+  {
+   "id": "u179",
+   "label": "git commit --amend",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "NjPnEXLf1Lt9qzgxccogv",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u182",
+   "label": "git rebase",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "HMEfUFNu_Wp_Pac7VWHr-",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u188",
+   "label": "git push --force",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "OQOmxg9mCfcjt80hpvXkA",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u190",
+   "label": "Managing Tags",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "NeU38WPbEphJuJ_AMkH82",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u191",
+   "label": "Pushing Tags",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "E3HAGNM-kXLL4Oci5JzpQ",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u193",
+   "label": "Git hooks",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "pqBV7BMAs0z6qpfZeW2XP",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u194",
+   "label": "Tagging",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "iFJBF-EEnLjQVsFSXjo_i",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u195",
+   "label": "Checkout Tags",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "62E1tDMXB6K74OEN0WsS0",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u198",
+   "label": "GitHub Actions",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "AmetdCURXXob5TUsikAab",
+   "source": "roadmap.sh",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u199",
+   "label": "GitHub CLI",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "h9cf_dh_pwjialOXOlNW-",
+   "source": "roadmap.sh",
+   "genre": "Git / リモート操作"
+  },
+  {
+   "id": "u202",
+   "label": "Git Reflog",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "hru0sL1-D4bJSQI1efEyU",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u204",
+   "label": "Git Bisect",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "ExXuwTQSI_lg4SRGW3Iu1",
+   "source": "roadmap.sh",
+   "genre": "Git / 履歴の修正"
+  },
+  {
+   "id": "u207",
+   "label": "Git Worktree",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "4dxVN81rXWn6VZqK99yq0",
+   "source": "roadmap.sh",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u209",
+   "label": "Secrets and Env Vars",
+   "roadmap": "git-github",
+   "level": "subtopic",
+   "source_id": "aflP7oWsQzAr4YPo2LLiQ",
+   "source": "roadmap.sh",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u223",
+   "label": "GitHub Security",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source_id": "f2PG4t6iVtfIH8BVe5H7f",
+   "source": "roadmap.sh",
+   "genre": "Git / チーム開発とPR"
+  },
+  {
+   "id": "u186",
+   "label": "開発フロー全体",
+   "roadmap": "overview",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u187",
+   "label": "環境の分離（ローカル/検証/本番）",
+   "roadmap": "overview",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u188",
+   "label": "環境差分の切り分け",
+   "roadmap": "overview",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u189",
+   "label": "不具合の層の切り分け",
+   "roadmap": "overview",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / つながりの切り分け"
+  },
+  {
+   "id": "u190",
+   "label": "ログの出る場所の違い",
+   "roadmap": "overview",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / つながりの切り分け"
+  },
+  {
+   "id": "u191",
+   "label": "リリース単位を小さくする",
+   "roadmap": "overview",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / 開発フローとチーム"
+  },
+  {
+   "id": "u192",
+   "label": "機能追加の着手順",
+   "roadmap": "overview",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / 登場人物と役割"
+  },
+  {
+   "id": "u193",
+   "label": "CDN",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / 登場人物と役割"
+  },
+  {
+   "id": "u194",
+   "label": "Webサーバーとアプリケーションサーバー",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u195",
+   "label": "ポート番号",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u196",
+   "label": "コンテナとDocker",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u197",
+   "label": "IaC（Infrastructure as Code）",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u198",
+   "label": "ロードバランサー",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / ネットワークとDNS"
+  },
+  {
+   "id": "u199",
+   "label": "ファイアウォールとポート開放",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / ネットワークとDNS"
+  },
+  {
+   "id": "u200",
+   "label": "セッションの外出し",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / 実行環境とインフラ"
+  },
+  {
+   "id": "u201",
+   "label": "HTTPステータスコード",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "全体像 / つながりの切り分け"
+  },
+  {
+   "id": "u202",
+   "label": "べき等性",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u203",
+   "label": "ページネーション",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u204",
+   "label": "APIの破壊的変更",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / HTTPとAPI"
+  },
+  {
+   "id": "u205",
+   "label": "パスワードのハッシュ保存",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u206",
+   "label": "認可（オブジェクトレベル）",
+   "roadmap": "backend",
+   "level": "topic",
+   "source": "self",
+   "genre": "サーバー / 認証とセキュリティ"
+  },
+  {
+   "id": "u207",
+   "label": "SPA",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u208",
+   "label": "コンポーネント設計",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u209",
+   "label": "props と state",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u210",
+   "label": "状態管理",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u211",
+   "label": "副作用の扱い",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u212",
+   "label": "リストレンダリングの key",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / フレームワークと描画"
+  },
+  {
+   "id": "u213",
+   "label": "通信状態のUI（読込中・失敗）",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / 通信とパフォーマンス"
+  },
+  {
+   "id": "u214",
+   "label": "デバウンス",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / 通信とパフォーマンス"
+  },
+  {
+   "id": "u215",
+   "label": "リクエストの重複排除",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / 通信とパフォーマンス"
+  },
+  {
+   "id": "u216",
+   "label": "二重送信の防止",
+   "roadmap": "frontend",
+   "level": "topic",
+   "source": "self",
+   "genre": "フロント / 通信とパフォーマンス"
+  },
+  {
+   "id": "u217",
+   "label": "ブランチ戦略（git-flow / GitHub Flow）",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source": "self",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u218",
+   "label": "こまめなマージ",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source": "self",
+   "genre": "Git / ブランチ運用"
+  },
+  {
+   "id": "u219",
+   "label": "hotfix の進め方",
+   "roadmap": "git-github",
+   "level": "topic",
+   "source": "self",
+   "genre": "Git / ブランチ運用"
+  }
+ ],
+ "genres": [
+  "サーバー / 実行環境とインフラ",
+  "Git / 仕組みと3つの領域",
+  "Git / リモート操作",
+  "サーバー / HTTPとAPI",
+  "Git / ブランチ運用",
+  "サーバー / データベース",
+  "サーバー / 認証とセキュリティ",
+  "全体像 / 開発フローとチーム",
+  "Git / チーム開発とPR",
+  "フロント / フレームワークと描画",
+  "Git / 履歴の修正",
+  "全体像 / リクエストの流れ",
+  "フロント / HTML と CSS",
+  "フロント / JavaScript と型",
+  "フロント / 通信とパフォーマンス",
+  "サーバー / ネットワークとDNS",
+  "全体像 / つながりの切り分け",
+  "フロント / ブラウザの仕組み",
+  "全体像 / 登場人物と役割"
+ ]
+}
